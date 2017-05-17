@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,13 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gcit.lms.dao.AuthorDAO;
 import com.gcit.lms.dao.BookDAO;
 import com.gcit.lms.entity.Author;
-
-/**
- * RESTful API services to provide administrative queries requested by web
- * 
- * @author yikaicao
- *
- */
+import com.gcit.lms.entity.Book;
 
 @RestController
 public class AdminService {
@@ -30,34 +25,15 @@ public class AdminService {
 
 	@Autowired
 	AuthorDAO adao;
-
-	@RequestMapping(value = "/viewAuthors/{pageNo}/{searchString}", method = RequestMethod.GET, produces = "application/json")
-	public List<Author> viewAuthors(@PathVariable Integer pageNo, @PathVariable String searchString) {
-
-		List<Author> authors = new ArrayList<>();
-
-		try {
-			if (searchString != null && searchString.length() > 0) {
-				authors = adao.readAuthorsByName(searchString);
-			} else {
-				authors = adao.readAllAuthors(pageNo);
-			}
-
-			for (Author a : authors) {
-				a.setBooks(bdao.readAllBooksByAuthorID(a.getAuthorId()));
-			}
-
-			return authors;
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-
-		return null;
+	
+	@RequestMapping(value = "/initAuthor", method = RequestMethod.GET, produces="application/json")
+	public Author initAuthor() {
+		return new Author();
 	}
 
 	@Transactional
-	@RequestMapping(value = "/addAuthor", method = RequestMethod.POST, consumes = "application/json")
-	public void addAuthor(Author author) {
+	@RequestMapping(value = "/addAuthor", method = RequestMethod.POST, consumes="application/json")
+	public void addAuthor(@RequestBody Author author) {
 		try {
 			adao.addAuthor(author);
 		} catch (ClassNotFoundException | SQLException e) {
@@ -77,6 +53,23 @@ public class AdminService {
 		}
 	}
 
+	@Transactional
+	public void addBook(Book book) {
+
+		try {
+			Integer bookId = bdao.addBookWithID(book);
+			if (book.getAuthors() != null && !book.getAuthors().isEmpty()) {
+				for (Author a : book.getAuthors()) {
+					bdao.addBookAuthors(book.getBookId(), a.getAuthorId());
+				}
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	public List<Author> getAllAuthors(Integer pageNo) {
 
 		List<Author> authors = new ArrayList<>();
@@ -91,8 +84,9 @@ public class AdminService {
 		}
 		return authors;
 	}
-
-	public List<Author> getAuthorsByName(Integer pageNo, String authorName) {
+	
+	@RequestMapping(value = "/searchAuthors/{authorName}", method = RequestMethod.GET, produces="application/json")
+	public List<Author> getAuthorsByName(@PathVariable String authorName) {
 
 		try {
 			return adao.readAuthorsByName(authorName);
@@ -102,8 +96,9 @@ public class AdminService {
 		}
 		return null;
 	}
-
-	public Author getAuthorByPk(Integer authorId) {
+	
+	@RequestMapping(value = "/getAuthorByPK/{authorId}", method = RequestMethod.GET, produces="application/json")
+	public Author getAuthorByPk(@PathVariable Integer authorId) {
 
 		try {
 			return adao.readAuthorByID(authorId);
@@ -113,5 +108,20 @@ public class AdminService {
 		}
 		return null;
 	}
+
+	// public Integer getAuthorsCount() {
+	// Connection conn = null;
+	// try {
+	// conn = ConnectionUtil.getConnection();
+	// return adao.getAuthorsCount();
+	// } catch (ClassNotFoundException | SQLException e) {
+	// e.printStackTrace();
+	// } finally{
+	// if(conn!=null){
+	// conn.close();
+	// }
+	// }
+	// return null;
+	// }
 
 }
