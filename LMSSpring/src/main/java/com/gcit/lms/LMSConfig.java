@@ -21,7 +21,7 @@ import com.mongodb.MongoClient;
 public class LMSConfig {
 	
 	public String driver = "com.mysql.jdbc.Driver";
-	public String url = "jdbc:mysql://localhost/library";
+	public String url = "jdbc:mysql://localhost/library?autoReconnect=true&useSSL=false";
 	public String username = "root";
 	public String password = "jkl;'";
 	

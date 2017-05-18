@@ -32,7 +32,7 @@ public class AdminService {
 	}
 
 	@RequestMapping(value = "/viewAuthors/{pageNo}", method = RequestMethod.GET, produces = "application/json")
-	public List<Author> viewAuthors(@PathVariable Integer pageNo) {
+	public List<Author> viewAuthor(@PathVariable Integer pageNo) {
 		List<Author> authors = new ArrayList<>();
 		try {
 			authors = adao.readAllAuthors(pageNo);
@@ -45,10 +45,29 @@ public class AdminService {
 		}
 		return null;
 	}
+	
+	@RequestMapping(value = "/authors/{pageNo}/{searchString}", method = RequestMethod.GET, produces = "application/json")
+	public List<Author> viewAuthors(@PathVariable Optional<Integer> pageNo, @PathVariable Optional<String> searchString) {
+
+		List<Author> authors = new ArrayList<>();
+		try {
+			if (pageNo.isPresent())
+				authors = adao.readAllAuthors(pageNo.get());
+			else
+				authors = adao.readAllAuthors(1);
+			for (Author a : authors) {
+				a.setBooks(bdao.readAllBooksByAuthorID(a.getAuthorId()));
+			}
+			return authors;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Transactional
 	@RequestMapping(value = "/addAuthor", method = RequestMethod.POST, consumes = "application/json")
-	public void addAuthor(@RequestBody Author author) {
+ 	public void addAuthor(@RequestBody Author author) {
 		try {
 			adao.addAuthor(author);
 		} catch (ClassNotFoundException | SQLException e) {
