@@ -57,11 +57,6 @@ public class LMSConfig {
 		return new BookDAO();
 	}
 	
-//	@Bean
-//	public PublisherDAO pdao(){
-//		return new PublisherDAO();
-//	}
-	
 	@Bean
 	public AdminService adminService(){
 		return new AdminService();

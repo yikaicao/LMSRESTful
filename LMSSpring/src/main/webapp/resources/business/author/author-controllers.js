@@ -1,3 +1,8 @@
+/**
+ * list of all functions to manipulate authors under '/src/webapp/admin-management' folder
+ * This javascript file serves as a connector between front-end and service layer.
+ */
+
 lmsApp.controller("authorController", function($scope, $http, $window, $location, authorService, $filter, Pagination){
 	if($location.$$path === "/viewauthors"){
 		authorService.getAllAuthorsService().then(function(backendAuthorsList){
@@ -11,6 +16,9 @@ lmsApp.controller("authorController", function($scope, $http, $window, $location
 		});
 	}
 	
+	/**
+	 *  Helper function to handle specific cases
+	 */
 	$scope.saveAuthor = function(){
 		$http.post("http://localhost:8080/lms/addAuthor", $scope.author).success(function(){
 			$window.location.href = "#/viewauthors";
@@ -50,4 +58,7 @@ lmsApp.controller("authorController", function($scope, $http, $window, $location
 			$scope.pagination.numPages = Math.ceil($scope.authors.length / $scope.pagination.perPage);
 		});
 	}
+	/**
+	 * End of helper functions
+	 */
 })

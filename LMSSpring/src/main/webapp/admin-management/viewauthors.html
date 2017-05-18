@@ -2,10 +2,18 @@
 	<div class="page-header">
 		<h1>List of Authors in LMS</h1>
 	</div>
+
+
+	<!-- Search -->
 	<div class="input-group">
 		<input type="text" class="form-control" ng-model="searchString"
 			placeholder="Search for..." ng-change="searchAuthors()">
 	</div>
+	<!-- End of Search -->
+
+
+
+	<!-- Pagination -->
 	<div class="col-md-10">
 		<ul class="pagination">
 			<li><a href="" ng-click="pagination.prevPage()">&laquo;</a></li>
@@ -15,6 +23,11 @@
 			<li><a href="" ng-click="pagination.nextPage()">&raquo;</a></li>
 		</ul>
 	</div>
+	<!-- End of Pagination -->
+
+
+
+	<!-- Table for listing authors -->
 	<table class="table" id="authorsTable">
 		<thead>
 			<tr>
@@ -37,6 +50,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<!-- End of Table -->
 
 	<!-- Modal for editing an existed author -->
 	<div class="modal fade bs-example-modal-lg" id="editAuthorModal"
