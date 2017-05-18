@@ -69,7 +69,6 @@ public class HomeController {
 		return null;
 	}
 	
-	
 	@RequestMapping(value = "/updateAuthor", method = RequestMethod.POST, consumes="application/json", produces="application/json")
 	 public List<Author> updateAuthor(@RequestBody Author author) {
 		try {

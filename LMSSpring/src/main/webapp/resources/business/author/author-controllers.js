@@ -11,7 +11,6 @@ lmsApp.controller("authorController", function($scope, $http, $window, $location
 		});
 	}
 	
-	
 	$scope.saveAuthor = function(){
 		$http.post("http://localhost:8080/lms/addAuthor", $scope.author).success(function(){
 			$window.location.href = "#/viewauthors";
