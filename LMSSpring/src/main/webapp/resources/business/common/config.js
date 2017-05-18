@@ -6,10 +6,10 @@ lmsApp.config(["$routeProvider", function($routeProvider){
 	}).when("/admin",{
 		templateUrl: "admin.html"
 	}).when("/author",{
-		templateUrl: "admin-services/author.html"
+		templateUrl: "admin-management/author.html"
 	}).when("/viewauthors",{
-		templateUrl: "viewauthors.html"
+		templateUrl: "admin-management/viewauthors.html"
 	}).when("/addauthor",{
-		templateUrl: "addauthor.html"
+		templateUrl: "admin-management/addauthor.html"
 	})
 }])
