@@ -1,0 +1,59 @@
+<div ng-controller="bookController">
+	<div class="page-header">
+		<h1>List of Books in LMS</h1>
+	</div>
+
+
+	<!-- Search -->
+	<div class="input-group">
+		<input type="text" class="form-control" ng-model="searchString"
+			placeholder="Search for..." ng-change="searchBooks()">
+	</div>
+	<!-- End of Search -->
+
+
+
+	<!-- Pagination -->
+	<div class="col-md-10">
+		<ul class="pagination">
+			<li><a href="" ng-click="pagination.prevPage()">&laquo;</a></li>
+			<li ng-repeat="n in [] | range: pagination.numPages"
+				ng-class="{active: n == pagination.page}"><a href=""
+				ng-click="pagination.toPageId(n)">{{n + 1}}</a></li>
+			<li><a href="" ng-click="pagination.nextPage()">&raquo;</a></li>
+		</ul>
+	</div>
+	<!-- End of Pagination -->
+
+
+
+	<!-- Table for listing authors -->
+	<table class="table" id="bookssTable">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th><a ng-click="sort()">Book Title</a></th>
+				<th>Authors</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
+				ng-repeat="b in books | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage">
+				<td>{{$index+1}}</td>
+				<td>{{b.title}}</td>
+				<td><span ng-repeat="a in b.authors">{{b.title}} |</span></td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- End of Table -->
+
+	<!-- Modal for editing an existed author -->
+
+	<!-- End of Modal -->
+
+
+</div>
+
+
