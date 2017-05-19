@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gcit.lms.dao.AuthorDAO;
 import com.gcit.lms.dao.BookDAO;
 import com.gcit.lms.entity.Author;
+import com.gcit.lms.entity.Book;
 
 @RestController
 public class AdminService {
@@ -59,6 +60,25 @@ public class AdminService {
 				a.setBooks(bdao.readAllBooksByAuthorID(a.getAuthorId()));
 			}
 			return authors;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@RequestMapping(value = "/books/{pageNo}/{searchString}", method = RequestMethod.GET, produces = "application/json")
+	public List<Book> viewBooks(@PathVariable Optional<Integer> pageNo, @PathVariable Optional<String> searchString) {
+
+		List<Book> books = new ArrayList<>();
+		try {
+			if (pageNo.isPresent())
+				books = bdao.readAllBooks(pageNo.get());
+			else
+				books = bdao.readAllBooks(1);
+			for (Book b: books) {
+				b.setAuthors(adao.readAllAuthorsByBookID(b.getBookId()));
+			}
+			return books;
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

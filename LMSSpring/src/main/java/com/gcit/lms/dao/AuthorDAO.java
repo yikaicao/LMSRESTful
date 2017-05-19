@@ -79,4 +79,9 @@ public class AuthorDAO extends BaseDAO implements ResultSetExtractor<List<Author
 		}
 		return authors;
 	}
+
+	public List<Author> readAllAuthorsByBookID(Integer bookId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
