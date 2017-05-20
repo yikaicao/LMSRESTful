@@ -9,6 +9,12 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import com.gcit.lms.entity.SequenceId;
 
+/**
+ * Leaved here as a reference in case of using mongodb.
+ * 
+ * @author yikaicao
+ *
+ */
 public class SequenceDAO {
 
 	@Autowired
