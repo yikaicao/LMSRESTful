@@ -9,6 +9,7 @@ import com.gcit.lms.entity.Author;
 
 /**
  * Receives calls from service layer and access database.
+ * 
  * @note pagination is handled at front end by javascript
  * @author yikaicao
  *
@@ -18,15 +19,6 @@ public class AuthorDAO extends BaseDAO implements ResultSetExtractor<List<Author
 
 	public void addAuthor(Author author) throws ClassNotFoundException, SQLException {
 		template.update("insert into tbl_author (authorName) values (?)", new Object[] { author.getAuthorName() });
-	}
-
-	public void updateAuthor(Author author) throws ClassNotFoundException, SQLException {
-		template.update("update tbl_author set authorName = ? where authorId = ?",
-				new Object[] { author.getAuthorName(), author.getAuthorId() });
-	}
-
-	public void deleteAuthor(Author author) throws ClassNotFoundException, SQLException {
-		template.update("delete * from tbl_author where authorId = ?", new Object[] { author.getAuthorId() });
 	}
 
 	public List<Author> readAllAuthors() throws ClassNotFoundException, SQLException {
@@ -47,6 +39,19 @@ public class AuthorDAO extends BaseDAO implements ResultSetExtractor<List<Author
 		return template.query("select * from tbl_author where authorName like ?", new Object[] { authorName }, this);
 	}
 
+	public void updateAuthor(Author author) throws ClassNotFoundException, SQLException {
+		template.update("update tbl_author set authorName = ? where authorId = ?",
+				new Object[] { author.getAuthorName(), author.getAuthorId() });
+	}
+
+	public void deleteAuthor(Author author) throws ClassNotFoundException, SQLException {
+		template.update("delete from tbl_author where authorId = ?", new Object[] { author.getAuthorId() });
+	}
+
+	public void deleteAuthorByPK(Integer primaryKey) throws ClassNotFoundException, SQLException {
+		template.update("delete from tbl_author where authorId = ?", new Object[] { primaryKey });
+	}
+
 	/**
 	 * extractData: only extract first layer of the data.
 	 */
@@ -61,4 +66,5 @@ public class AuthorDAO extends BaseDAO implements ResultSetExtractor<List<Author
 		}
 		return authors;
 	}
+
 }

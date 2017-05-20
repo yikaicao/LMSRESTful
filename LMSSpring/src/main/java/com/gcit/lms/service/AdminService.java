@@ -89,11 +89,10 @@ public class AdminService {
 		}
 	}
 
-	@RequestMapping(value = "/authors", method = RequestMethod.DELETE, consumes = "application/json")
-	public void deleteAuthor(@RequestBody Author author) {
-		System.out.println("got the request!");
+	@RequestMapping(value = "/authors/{primaryKey}", method = RequestMethod.DELETE)
+	public void deleteAuthor(@PathVariable Integer primaryKey) {
 		try {
-			adao.deleteAuthor(author);
+			adao.deleteAuthorByPK(primaryKey);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

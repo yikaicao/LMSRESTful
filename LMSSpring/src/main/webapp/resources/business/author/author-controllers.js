@@ -61,7 +61,9 @@ lmsApp.controller("authorController", function($scope, $http, $window, $location
 	}
 	
 	$scope.deleteAuthor = function(){
-		$http.delete("http://localhost:8080/lms/authors", $scope.author).success(function(){
+		console.log($scope.author);
+		
+		$http.delete("http://localhost:8080/lms/authors/"+$scope.author.authorId).success(function(){
 			$scope.deleteAuthorModal = false;
 			authorService.getAllAuthorsService().then(function(backendAuthorsList){
 				$scope.authors = backendAuthorsList;
