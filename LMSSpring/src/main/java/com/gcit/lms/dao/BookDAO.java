@@ -4,10 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.jdbc.core.ResultSetExtractor;
-
-import com.gcit.lms.entity.Author;
 import com.gcit.lms.entity.Book;
 
 public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
@@ -51,8 +48,7 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 		return books;
 	}
 
-	public List<Book> readAllBooks(Integer pageNo) throws ClassNotFoundException, SQLException {
-		setPageNo(pageNo);
+	public List<Book> readAllBook() throws ClassNotFoundException, SQLException {
 		return template.query("select * from tbl_book", this);
 	}
 }

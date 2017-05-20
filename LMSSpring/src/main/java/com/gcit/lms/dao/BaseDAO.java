@@ -15,15 +15,4 @@ public abstract class BaseDAO {
 	@Autowired
 	public SequenceDAO seqDao;
 	
-	private Integer pageNo;
-	private Integer pageSize = 10;
-	
-	public Integer getPageNo() {
-		return pageNo;
-	}
-
-	public void setPageNo(Integer pageNo) {
-		this.pageNo = pageNo;
-	}
-
 }

@@ -46,7 +46,8 @@
 				<td><span ng-repeat="b in a.books">{{b.title}} |</span>
 				<td><button type="button" class="btn btn-primary"
 						ng-click="showEditAuthorModal(a.authorId)">Update</button></td>
-				<td><button type="button" class="btn btn-danger">Delete</button></td>
+				<td><button type="button" class="btn btn-danger"
+						ng-click="showDeleteAuthorModal(a.authorId)">Delete</button></td>
 			</tr>
 		</tbody>
 	</table>
@@ -75,6 +76,38 @@
 							ng-click="closeModal()">Close</button>
 						<button type="button" class="btn btn-primary"
 							ng-click="updateAuthor()">Update</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- <pre>{{author | json}}</pre> -->
+	</div>
+
+	<!-- End of Modal -->
+
+	<!-- Modal for deleting an existed author -->
+	<div class="modal fade bs-example-modal-lg" id="deleteAuthorModal"
+		modal="deleteAuthorModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Delete Author</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to delete Author: {{author.authorName}}?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
+						<button type="button" class="btn btn-danger"
+							ng-click="deleteAuthor()">Confirm</button>
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,7 @@
 /**
- * list of all functions to manipulate authors under '/src/webapp/admin-management' folder
- * This javascript file serves as a connector between front-end and service layer.
+ * list of all functions to manipulate authors under
+ * '/src/webapp/admin-management' folder This javascript file serves as a
+ * connector between front-end and service layer.
  */
 
 lmsApp.controller("authorController", function($scope, $http, $window, $location, authorService, $filter, Pagination){
@@ -17,7 +18,7 @@ lmsApp.controller("authorController", function($scope, $http, $window, $location
 	}
 	
 	/**
-	 *  Helper function to handle specific cases
+	 * Helper function to handle specific cases
 	 */
 	$scope.saveAuthor = function(){
 		$http.post("http://localhost:8080/lms/addAuthor", $scope.author).success(function(){
@@ -36,13 +37,32 @@ lmsApp.controller("authorController", function($scope, $http, $window, $location
 		});
 	}
 	
+	$scope.showDeleteAuthorModal = function(authorId) {
+		authorService.getAuthorByPKService(authorId).then(function(data){
+			$scope.author = data;
+			$scope.deleteAuthorModal = true;
+		});
+	}
+	
 	$scope.closeModal = function(){
 		$scope.editAuthorModal = false;
+		$scope.deleteAuthorModal = false;
 	}
 	
 	$scope.updateAuthor = function(){
-		$http.post("http://localhost:8080/lms/updateAuthor", $scope.author).success(function(){
+		$http.put("http://localhost:8080/lms/authors", $scope.author).success(function(){
 			$scope.editAuthorModal = false;
+			authorService.getAllAuthorsService().then(function(backendAuthorsList){
+				$scope.authors = backendAuthorsList;
+				$scope.pagination = Pagination.getNew(10);
+				$scope.pagination.numPages = Math.ceil($scope.authors.length / $scope.pagination.perPage);
+			});
+		});
+	}
+	
+	$scope.deleteAuthor = function(){
+		$http.delete("http://localhost:8080/lms/authors", $scope.author).success(function(){
+			$scope.deleteAuthorModal = false;
 			authorService.getAllAuthorsService().then(function(backendAuthorsList){
 				$scope.authors = backendAuthorsList;
 				$scope.pagination = Pagination.getNew(10);
