@@ -8,7 +8,4 @@ public abstract class BaseDAO {
 	@Autowired
 	public JdbcTemplate template;
 	
-	@Autowired
-	public SequenceDAO seqDao;
-	
 }
