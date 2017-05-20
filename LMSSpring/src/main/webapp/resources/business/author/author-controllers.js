@@ -1,7 +1,8 @@
 /**
- * list of all functions to manipulate authors under
- * '/src/webapp/admin-management' folder This javascript file serves as a
- * connector between front-end and service layer.
+ * list of all functions to manipulate authors
+ * 
+ * This javascript file serves as a connector between front-end and service
+ * layer.
  */
 
 lmsApp.controller("authorController", function($scope, $http, $window, $location, authorService, $filter, Pagination){
