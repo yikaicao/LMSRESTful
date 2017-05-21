@@ -1,10 +1,26 @@
 <div ng-controller="bookController">
 	<h2>Hello Admin!</h2>
 	<h3>Enter the details of your Book</h3>
-	<input type="text" ng-model="item.title"> <br /> <input
-		type="checkbox" ng-repeat="p in publishers" ng-model="item.publisher"
-		value="{{p.publisherName}}"><br>
+
+
+
+
+	<input type="text" ng-model="item.title"> <br />
+	<div class="checbox">
+		<label ng-repeat="p in publishers"> <input type="checkbox"
+			ng-click="toggleSelection(p.publisherName)">
+			{{p.publisherName}}
+		</label>
+	</div>
+	
+	<div class="checbox">
+		<label ng-repeat="g in genres"> <input type="checkbox" ng-click="selectGenre()">
+			{{g.genreName}}
+		</label>
+	</div>
 	<button type="button" ng-click="saveBook()">Add Book</button>
 
-	booktitle bookpublisherid bookgenre
+
+
+	<label> 
 </div>

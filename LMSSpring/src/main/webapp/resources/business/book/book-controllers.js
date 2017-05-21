@@ -6,12 +6,34 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location, 
 			$scope.pagination.numPages = Math.ceil($scope.items.length / $scope.pagination.perPage);
 		});
 	}else if($location.$$path === "/addbook"){
-		$http.get("http://localhost:8080/lms/initBook").success(function(backendItem){
-			$scope.item = backendItem;
+		$http.get("http://localhost:8080/lms/initBook").success(function(data){
+			$scope.item = data;
 		});
-		$http.get("http://localhost:8080/lms/publishers").success(function(backendPublishers){
-			$scope.publishers = backendPublishers;
+		$http.get("http://localhost:8080/lms/publishers").success(function(data){
+			$scope.publishers = data;
 		});
+		$http.get("http://localhost:8080/lms/genres").success(function(data){
+			$scope.genres = data;
+		});
+	}
+	
+	$scope.selection = [];
+	$scope.toggleSelection = function (data){
+		var index = $scope.selection.indexOf(data);
+
+	    // if currently selected
+	    if (index > -1) {
+	      $scope.selection.splice(index, 1);
+	    }
+
+	    // if newly selected
+	    else {
+	      $scope.selection.push(data);
+	    }
+	};
+	
+	$scope.selectGenre = function() {
+		console.log($scope.genres);
 	}
 	
 	$scope.sort = function(){
@@ -20,5 +42,7 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location, 
 	
 	$scope.saveBook = function() {
 		console.log($scope.item);
+		console.log($scope.selection);
 	}
+	
 })

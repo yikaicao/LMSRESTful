@@ -10,6 +10,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import com.gcit.lms.dao.AuthorDAO;
 import com.gcit.lms.dao.BookDAO;
+import com.gcit.lms.dao.GenreDAO;
 import com.gcit.lms.dao.PublisherDAO;
 import com.gcit.lms.service.AdminService;
 
@@ -56,6 +57,11 @@ public class LMSConfig {
 	@Bean
 	public PublisherDAO pdao(){
 		return new PublisherDAO();
+	}
+	
+	@Bean
+	public GenreDAO gdao(){
+		return new GenreDAO();
 	}
 	
 	@Bean

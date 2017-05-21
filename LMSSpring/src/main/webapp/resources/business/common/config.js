@@ -6,11 +6,11 @@ lmsApp.config([ "$routeProvider", function($routeProvider) {
 	}).when("/admin", {
 		templateUrl : "admin.html"
 	}).when("/author", {
-		templateUrl : "html/admin-management/author.html"
+		templateUrl : "html/author-management/author.html"
 	}).when("/viewauthors", {
-		templateUrl : "html/admin-management/viewauthors.html"
+		templateUrl : "html/author-management/viewauthors.html"
 	}).when("/addauthor", {
-		templateUrl : "html/admin-management/addauthor.html"
+		templateUrl : "html/author-management/addauthor.html"
 	}).when("/book", {
 		templateUrl : "html/book-management/book.html"
 	}).when("/viewbooks", {

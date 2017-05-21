@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gcit.lms.dao.AuthorDAO;
 import com.gcit.lms.dao.BookDAO;
+import com.gcit.lms.dao.GenreDAO;
 import com.gcit.lms.dao.PublisherDAO;
 import com.gcit.lms.entity.Author;
 import com.gcit.lms.entity.Book;
+import com.gcit.lms.entity.Genre;
 import com.gcit.lms.entity.Publisher;
 
 /**
@@ -44,6 +46,9 @@ public class AdminService {
 
 	@Autowired
 	PublisherDAO pdao;
+	
+	@Autowired
+	GenreDAO gdao;
 
 	// %%%%%%%%%% author services %%%%%%%%%%
 
@@ -132,6 +137,13 @@ public class AdminService {
 	public List<Publisher> readPublishers(@RequestParam(value = "pageNo", required = false) Integer pageNo,
 			@RequestParam(value = "searchString", required = false) String searchString) {
 		return pdao.readAllPublishers();
+	}
+	
+	// %%%%%%%%%% genre services %%%%%%%%%%
+	
+	@RequestMapping(value = "/genres", method = RequestMethod.GET, produces = "application/json")
+	public List<Genre> readGenres(){
+		return gdao.readAllGenres();
 	}
 
 }
