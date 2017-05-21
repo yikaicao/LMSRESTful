@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gcit.lms.dao.AuthorDAO;
 import com.gcit.lms.dao.BookDAO;
+import com.gcit.lms.dao.PublisherDAO;
 import com.gcit.lms.entity.Author;
+import com.gcit.lms.entity.Book;
+import com.gcit.lms.entity.Publisher;
 
 /**
  * Using spring to handle http requests and specify what to return.
@@ -39,6 +42,11 @@ public class AdminService {
 	@Autowired
 	AuthorDAO adao;
 
+	@Autowired
+	PublisherDAO pdao;
+
+	// %%%%%%%%%% author services %%%%%%%%%%
+
 	@RequestMapping(value = "/initAuthor", method = RequestMethod.GET, produces = "application/json")
 	public Author initAuthor() {
 		return new Author();
@@ -59,7 +67,10 @@ public class AdminService {
 			@RequestParam(value = "searchString", required = false) String searchString) {
 		List<Author> authors = new ArrayList<>();
 		try {
-			authors = adao.readAllAuthors();
+			if (searchString == null)
+				authors = adao.readAllAuthors();
+			else
+				authors = adao.readAuthorsByName(searchString);
 			for (Author a : authors) {
 				a.setBooks(bdao.readAllBooksByAuthorID(a.getAuthorId()));
 			}
@@ -97,4 +108,30 @@ public class AdminService {
 			e.printStackTrace();
 		}
 	}
+
+	// %%%%%%%%%% book services %%%%%%%%%%
+
+	@RequestMapping(value = "/initBook", method = RequestMethod.GET, produces = "application/json")
+	public Book initBook() {
+		return new Book();
+	}
+
+	@RequestMapping(value = "/books", method = RequestMethod.GET, produces = "application/json")
+	public List<Book> readBooks(@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "searchString", required = false) String searchString) {
+		List<Book> books = new ArrayList<>();
+		books = bdao.readAllBooks();
+		for (Book b : books)
+			b.setAuthors(adao.readAllAuthorsByBookID(b.getBookId()));
+		return books;
+	}
+
+	// %%%%%%%%%% publisher services %%%%%%%%%%
+
+	@RequestMapping(value = "/publishers", method = RequestMethod.GET, produces = "application/json")
+	public List<Publisher> readPublishers(@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "searchString", required = false) String searchString) {
+		return pdao.readAllPublishers();
+	}
+
 }

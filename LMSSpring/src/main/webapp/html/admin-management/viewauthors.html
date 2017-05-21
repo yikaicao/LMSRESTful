@@ -43,7 +43,7 @@
 				ng-repeat="a in authors | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage">
 				<td>{{$index+1}}</td>
 				<td>{{a.authorName}}</td>
-				<td><span ng-repeat="b in a.books">{{b.title}} |</span>
+				<td><span ng-repeat="b in a.books">{{b.title}}{{$last ? '' :', '}}</span>
 				<td><button type="button" class="btn btn-primary"
 						ng-click="showEditAuthorModal(a.authorId)">Update</button></td>
 				<td><button type="button" class="btn btn-danger"

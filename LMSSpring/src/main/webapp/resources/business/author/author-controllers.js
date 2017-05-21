@@ -75,7 +75,7 @@ lmsApp.controller("authorController", function($scope, $http, $window, $location
 	}
 	
 	$scope.searchAuthors = function(){
-		$http.get("http://localhost:8080/lms/searchAuthors/"+$scope.searchString).success(function(data){
+		$http.get("http://localhost:8080/lms/authors?searchString="+$scope.searchString).success(function(data){
 			$scope.authors = data;
 			$scope.pagination = Pagination.getNew(10);
 			$scope.pagination.numPages = Math.ceil($scope.authors.length / $scope.pagination.perPage);

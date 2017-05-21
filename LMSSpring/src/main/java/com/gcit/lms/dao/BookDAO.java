@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import com.gcit.lms.entity.Book;
 
@@ -21,7 +23,7 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 		template.update("insert into tbl_book_authors values (?, ?)", new Object[] { bookId, authorId });
 	}
 
-	public List<Book> readAllBook() throws ClassNotFoundException, SQLException {
+	public List<Book> readAllBooks() throws DataAccessException {
 		return template.query("select * from tbl_book", this);
 	}
 

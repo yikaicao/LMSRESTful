@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<div ng-controller="bookController">
+	<h2>Hello Admin!</h2>
+	<h3>Enter the details of your Book</h3>
+	<input type="text" ng-model="item.title"> <br /> <input
+		type="checkbox" ng-repeat="p in publishers" ng-model="item.publisher"
+		value="{{p.publisherName}}"><br>
+	<button type="button" ng-click="saveBook()">Add Book</button>
 
-</body>
-</html>
+	booktitle bookpublisherid bookgenre
+</div>

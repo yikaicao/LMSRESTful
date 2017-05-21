@@ -28,7 +28,7 @@
 
 
 	<!-- Table for listing authors -->
-	<table class="table" id="bookssTable">
+	<table class="table" id="booksTable">
 		<thead>
 			<tr>
 				<th>#</th>
@@ -40,16 +40,20 @@
 		</thead>
 		<tbody>
 			<tr
-				ng-repeat="b in books | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage">
+				ng-repeat="b in items | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage">
 				<td>{{$index+1}}</td>
 				<td>{{b.title}}</td>
-				<td><span ng-repeat="a in b.authors">{{b.title}} |</span></td>
+				<td><span ng-repeat="a in b.authors">{{a.authorName}}{{$last ? '' :', '}}</span></td>
+				<td><button type="button" class="btn btn-primary"
+						ng-click="showEditBookModal(b.bookId)">Update</button></td>
+				<td><button type="button" class="btn btn-danger"
+						ng-click="showDeleteBookModal(b.bookId)">Delete</button></td>
 			</tr>
 		</tbody>
 	</table>
 	<!-- End of Table -->
 
-	<!-- Modal for editing an existed author -->
+	<!-- Modal for editing an existed book -->
 
 	<!-- End of Modal -->
 
