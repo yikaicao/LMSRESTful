@@ -77,7 +77,11 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 	}
 
 	public void deleteBook(Book book) throws ClassNotFoundException, SQLException {
-		template.update("delete * from tbl_book where bookId = ?", new Object[] { book.getBookId() });
+		template.update("delete from tbl_book where bookId = ?", new Object[] { book.getBookId() });
+	}
+
+	public void delteBookByPK(Integer primaryKey) throws ClassNotFoundException, SQLException {
+		template.update("delete from tbl_book where bookId = ?", new Object[] { primaryKey });
 	}
 
 	@Override
@@ -90,6 +94,11 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 			books.add(b);
 		}
 		return books;
+	}
+
+	public List<Book> readAllBooksByName(String bookName) {
+		bookName = "%" + bookName + "%";
+		return template.query("select * from tbl_book where title like ?", new Object[] { bookName }, this);
 	}
 
 }

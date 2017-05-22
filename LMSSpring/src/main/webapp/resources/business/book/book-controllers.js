@@ -120,7 +120,46 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 	}
 
 	// end of updating new book functions
-
+	
+	/**
+	 * helper functions for deleting a book
+	 */
+	$scope.showDeleteBookModal = function(itemId) {
+		bookService.getBookByPKService(itemId).then(function(data) {
+			$scope.thisBookGenres = [];
+			$scope.book = data;
+			$scope.deleteItemModal = true;
+			$scope.book.genres.forEach(function(e) {
+				$scope.thisBookGenres.push(e.genreId);
+			});
+		});
+		$http.get("http://localhost:8080/lms/genres").success(function(data) {
+			$scope.genres = data;
+		});
+	};
+	
+	$scope.deleteItem = function(){
+		$http.delete("http://localhost:8080/lms/books/"+$scope.book.bookId).success(function(){
+			$scope.deleteItemModal = false;
+			bookService.getAllItemsService().then(
+					function(backendItemsList) {
+						$scope.items = backendItemsList;
+						$scope.pagination = Pagination.getNew(10);
+						$scope.pagination.numPages = Math.ceil($scope.items.length
+								/ $scope.pagination.perPage);
+					});
+		});
+	}
+	// end of deleting a book
+	
+	$scope.searchItems = function(){
+		$http.get("http://localhost:8080/lms/books?searchString="+$scope.searchString).success(function(data){
+			$scope.items = data;
+			$scope.pagination = Pagination.getNew(10);
+			$scope.pagination.numPages = Math.ceil($scope.items.length / $scope.pagination.perPage);
+		});
+	}
+	
 	$scope.closeModal = function() {
 		$scope.editItemModal = false;
 		$scope.deleteItemModal = false;

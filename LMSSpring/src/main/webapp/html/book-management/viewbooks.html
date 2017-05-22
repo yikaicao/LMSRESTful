@@ -7,7 +7,7 @@
 	<!-- Search -->
 	<div class="input-group">
 		<input type="text" class="form-control" ng-model="searchString"
-			placeholder="Search for..." ng-change="searchBooks()">
+			placeholder="Search for..." ng-change="searchItems()">
 	</div>
 	<!-- End of Search -->
 
@@ -89,6 +89,37 @@
 			</div>
 		</div>
 	</div>
+	<!-- End of Modal -->
+	
+	<!-- Modal for deleting an existed author -->
+	<div class="modal fade bs-example-modal-lg" id="deleteItemModal"
+		modal="deleteItemModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Delete Book</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to delete Book: {{book.title}}?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
+						<button type="button" class="btn btn-danger"
+							ng-click="deleteItem()">Confirm</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
 	<!-- End of Modal -->
 
 

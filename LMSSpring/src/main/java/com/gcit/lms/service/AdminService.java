@@ -138,7 +138,10 @@ public class AdminService {
 	public List<Book> readBooks(@RequestParam(value = "pageNo", required = false) Integer pageNo,
 			@RequestParam(value = "searchString", required = false) String searchString) {
 		List<Book> books = new ArrayList<>();
-		books = bdao.readAllBooks();
+		if (searchString == null)
+			books = bdao.readAllBooks();
+		else
+			books = bdao.readAllBooksByName(searchString);
 		for (Book b : books) {
 			b.setAuthors(adao.readAllAuthorsByBookID(b.getBookId()));
 			b.setGenres(gdao.readAllGenresByBookID(b.getBookId()));
@@ -160,9 +163,19 @@ public class AdminService {
 
 	@Transactional
 	@RequestMapping(value = "/books", method = RequestMethod.PUT)
-	public void updateBook(@RequestBody Book book) {		
+	public void updateBook(@RequestBody Book book) {
 		try {
 			bdao.updateBook(book);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Transactional
+	@RequestMapping(value = "/books/{primaryKey}", method = RequestMethod.DELETE)
+	public void deleteBook(@PathVariable Integer primaryKey) {
+		try {
+			bdao.delteBookByPK(primaryKey);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
