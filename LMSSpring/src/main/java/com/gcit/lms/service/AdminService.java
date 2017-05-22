@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gcit.lms.dao.AuthorDAO;
 import com.gcit.lms.dao.BookDAO;
+import com.gcit.lms.dao.BookLoanDAO;
 import com.gcit.lms.dao.GenreDAO;
 import com.gcit.lms.dao.PublisherDAO;
 import com.gcit.lms.entity.Author;
@@ -51,6 +52,9 @@ public class AdminService {
 
 	@Autowired
 	GenreDAO gdao;
+
+	@Autowired
+	BookLoanDAO bldao;
 
 	// %%%%%%%%%% author services %%%%%%%%%%
 
@@ -128,6 +132,7 @@ public class AdminService {
 	@Transactional
 	@RequestMapping(value = "/addBook", method = RequestMethod.POST, consumes = "application/json")
 	public void createBook(@RequestBody Book book) {
+		//System.out.printf("size = %d\n", book.getAuthors().size());
 		try {
 			bdao.addBook(book);
 		} catch (ClassNotFoundException | SQLException e) {
@@ -203,10 +208,22 @@ public class AdminService {
 
 	// %%%%%%%%%% book loan services %%%%%%%%%%
 
+	@RequestMapping(value = "/bookloans/{branchId}", method = RequestMethod.GET, produces = "application/json")
+	public List<BookLoan> readBookLoans(@PathVariable Integer branchId) {
+		return bldao.readBookLoansAtBranch(branchId);
+	}
+
 	@Transactional
 	@RequestMapping(value = "/bookloans", method = RequestMethod.PUT)
 	public void updateBookLoan(@RequestBody BookLoan bl) {
+		bldao.updateBookLoanDueDate(bl);
+	}
 
+	@Transactional
+	@RequestMapping(value = "/extendduedate/{branchId}/{bookId}/{cardNo}", method = RequestMethod.PUT)
+	public void extendduedate(@PathVariable Integer branchId, @PathVariable Integer bookId,
+			@PathVariable Integer cardNo) {
+		bldao.extendDueDate(branchId, bookId, cardNo);
 	}
 
 }

@@ -97,14 +97,14 @@
 							<option ng-repeat="b in missedBooks" ng-value="b.bookId">{{b.title}}</option>
 						</select> <br /> <input class="form-control" ng-model="b.noOfCopies"
 							type="number" min="0">
-							
+
 
 						<!-- End of Book Copies Table -->
 					</div>
 
 					<div class="modal-footer">
-					<button type="button" class="btn btn-success"
-										ng-click="addBookCopy(b)">Add</button>
+						<button type="button" class="btn btn-success"
+							ng-click="addBookCopy(b)">Add</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal"
 							ng-click="closeModal()">Close</button>
 					</div>

@@ -6,6 +6,7 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 					$scope.items = backendItemsList;
 				});
 	} 
+	
 
 	/**
 	 * helper functions for managing branch detail
@@ -108,11 +109,47 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 	}
 	// end of adding new copy
 	
+	/**
+	 * Override due date
+	 */
+	$scope.showOverrideModal = function(branchId) {
+		$scope.overrideModal = true;
+		$scope.branchId = branchId;
+		$http.get("http://localhost:8080/lms/bookloans/"+branchId).success(function(backendBookLoanList){
+			backendBookLoanList.forEach(function(e, i){
+				$http.get("http://localhost:8080/lms/books/"+e.bookId).success(function(backendBook){
+					backendBookLoanList[i].title = backendBook.title;
+				});
+				$http.get("http://localhost:8080/lms/borrowers/"+e.cardNo).success(function(backendBorrower){
+					backendBookLoanList[i].borrowerName = backendBorrower.name;
+				});
+			});
+			$scope.bookLoans = backendBookLoanList;
+		});
+	}
+	
+	$scope.extendDate = function(data) {
+		$http.put("http://localhost:8080/lms/extendduedate/"+data.branchId+"/"+data.bookId+"/"+data.cardNo).success(function(){
+			$http.get("http://localhost:8080/lms/bookloans/"+data.branchId).success(function(backendBookLoanList){
+				backendBookLoanList.forEach(function(e, i){
+					$http.get("http://localhost:8080/lms/books/"+e.bookId).success(function(backendBook){
+						backendBookLoanList[i].title = backendBook.title;
+					});
+					$http.get("http://localhost:8080/lms/borrowers/"+e.cardNo).success(function(backendBorrower){
+						backendBookLoanList[i].borrowerName = backendBorrower.name;
+					});
+				});
+				$scope.bookLoans = backendBookLoanList;
+			});
+		});
+	}
+	// end of overriding
 	
 	$scope.closeModal = function() {
 		$scope.manageBranchModal = false;
 		$scope.addBookModal = false;
 		$scope.deleteBranchModal = false;
+		$scope.overrideModal = false;
 	};
 
 })
