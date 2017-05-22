@@ -1,6 +1,5 @@
 package com.gcit.lms.service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gcit.lms.dao.BookCopyDAO;
 import com.gcit.lms.dao.BookDAO;
 import com.gcit.lms.dao.BranchDAO;
-import com.gcit.lms.entity.Author;
 import com.gcit.lms.entity.Book;
 import com.gcit.lms.entity.BookCopy;
 import com.gcit.lms.entity.Branch;
