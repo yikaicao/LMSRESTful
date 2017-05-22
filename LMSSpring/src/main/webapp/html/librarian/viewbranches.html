@@ -14,8 +14,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr
-				ng-repeat="br in items">
+			<tr ng-repeat="br in items">
 				<td>{{$index+1}}</td>
 				<td>{{br.branchName}}</td>
 				<td><button type="button" class="btn btn-success"
@@ -26,7 +25,7 @@
 		</tbody>
 	</table>
 	<!-- End of Table -->
-	
+
 	<!-- Modal -->
 	<div class="modal fade bs-example-modal-lg" id="manageBranchModal"
 		modal="manageBranchModal" tabindex="-1" role="dialog"
@@ -46,6 +45,16 @@
 						<input type="text" ng-model="branch.branchName"> <br />
 						<p>Branch Address:</p>
 						<input type="text" ng-model="branch.branchAddress"> <br />
+
+						<!-- Book Copies Table -->
+						<table class="table table-striped">
+
+							<input class="form-control" type="text"
+								ng-repeat="bc in bookCopies" placeholder="bc.title" disabled>
+						</table>
+						<!-- End of Book Copies Table -->
+
+
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal"

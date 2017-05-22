@@ -68,6 +68,9 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 		$scope.manageBranchModal = true;
 		librarianService.getBranchByPKService(itemId).then(function(data) {
 			$scope.branch = data;
+			librarianService.getBookCopiesAtBranchService(itemId).then(function(backendBookCopies){
+				$scope.branch.bookCopies = backendBookCopies;
+			});
 		});
 	};
 

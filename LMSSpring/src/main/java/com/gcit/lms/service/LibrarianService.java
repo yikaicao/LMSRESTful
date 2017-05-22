@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gcit.lms.dao.BookCopyDAO;
 import com.gcit.lms.dao.BranchDAO;
+import com.gcit.lms.entity.BookCopy;
 import com.gcit.lms.entity.Branch;
 
 @RestController
@@ -19,6 +21,9 @@ public class LibrarianService {
 	
 	@Autowired
 	BranchDAO brdao;
+	
+	@Autowired
+	BookCopyDAO bcdao;
 	
 	
 	@RequestMapping(value = "/branches", method = RequestMethod.GET, produces = "application/json")
@@ -42,5 +47,10 @@ public class LibrarianService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@RequestMapping(value = "/bookcopies/{branchId}", method = RequestMethod.GET, produces = "application/json")
+	public List<BookCopy> readBookCopy(@PathVariable Integer branchId) {
+		return bcdao.readBookCopyByBranchID(branchId);
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.gcit.lms.dao.AuthorDAO;
+import com.gcit.lms.dao.BookCopyDAO;
 import com.gcit.lms.dao.BookDAO;
 import com.gcit.lms.dao.BranchDAO;
 import com.gcit.lms.dao.GenreDAO;
@@ -69,6 +70,11 @@ public class LMSConfig {
 	@Bean
 	public BranchDAO brdao(){
 		return new BranchDAO();
+	}
+	
+	@Bean
+	public BookCopyDAO bcdao(){
+		return new BookCopyDAO();
 	}
 	
 	@Bean
