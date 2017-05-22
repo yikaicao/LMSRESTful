@@ -46,13 +46,22 @@ lmsApp.controller("borrowerController", function($scope, $http, $window,
 						$http.get("http://localhost:8080/lms/bookcopy/"+$scope.branchId+"/"+e.bookId).success(function(data){
 							backendAvailableBooks[i].noOfCopies = data.noOfCopies;
 						});
+						$http.get("http://localhost:8080/lms/bookloans/"+$scope.branchId+"/"+$scope.borrowerId+"/"+e.bookId).success(function(backendBookLoan){
+							console.log(backendBookLoan);
+							$scope.bookCopies[i].dateIn = backendBookLoan.dateIn; 
+						});
 					});
 					$scope.bookCopies = backendAvailableBooks;
 				});
 				
 				// init book loan records
 				$http.get("http://localhost:8080/lms/bookloans/"+$scope.branchId+"/"+$scope.borrowerId).success(function(backendBookLoanList){
-					console.log(backendBookLoanList);
+					backendBookLoanList.forEach(function(e, i) {
+						$http.get("http://localhost:8080/lms/books/"+e.bookId).success(function(data){
+							backendBookLoanList[i].title = data.title;
+						});
+					});
+					$scope.bookLoans = backendBookLoanList;
 				});
 			}
 			else 
@@ -74,20 +83,72 @@ lmsApp.controller("borrowerController", function($scope, $http, $window,
 					$http.get("http://localhost:8080/lms/bookcopy/"+$scope.branchId+"/"+e.bookId).success(function(data){
 						backendAvailableBooks[i].noOfCopies = data.noOfCopies;
 					});
+					$http.get("http://localhost:8080/lms/bookloans/"+$scope.branchId+"/"+$scope.borrowerId+"/"+e.bookId).success(function(backendBookLoan){
+						console.log(backendBookLoan);
+						$scope.bookCopies[i].dateIn = backendBookLoan.dateIn; 
+					});
 				});
 				$scope.bookCopies = backendAvailableBooks;
 			});
 			
 		});
 	}
+	
+	$scope.allowCheckout = function (bc) {
+		console.log(bc);
+		if (bc.noOfCopies < 1)
+			return false;
+		if (bc.dateIn === null)
+			return false;
+		return true;
+	}
 	// end of checking out a book
 	
 	/**
 	 * Return a book
 	 */
-	$scope.returnBookCopy = function() {
+	$scope.returnBookCopy = function(bl) {
+		$http.post("http://localhost:8080/lms/bookloans", bl).success(function(){
+			// refresh book loan records
+			$http.get("http://localhost:8080/lms/bookloans/"+$scope.branchId+"/"+$scope.borrowerId).success(function(backendBookLoanList){
+				backendBookLoanList.forEach(function(e, i) {
+					$http.get("http://localhost:8080/lms/books/"+e.bookId).success(function(data){
+						backendBookLoanList[i].title = data.title;
+					});
+				});
+				$scope.bookLoans = backendBookLoanList;
+			});
+		})
+	}
+	
+	$scope.compareDate = function(date, bl){
+		var q = new Date();
+		var m = q.getMonth();
+		var d = q.getDate();
+		var y = q.getFullYear();
+
+		var today = new Date(y,m,d);
+		
+		var dueDate = new Date(date);
+		
+		if (dueDate > today)
+			return true;
+		else 
+			return false;
 		
 	}
+	
+	$scope.contact = function() {
+		alert("You are in serious trouble!");
+	}
+	
+	$scope.bookReturned = function(bl) {
+		if(bl.dateIn == null)
+			return false;
+		return true;
+	}
+	
+	// end of returning a book
 
 	$scope.closeModal = function() {
 		$scope.validateModal = false;

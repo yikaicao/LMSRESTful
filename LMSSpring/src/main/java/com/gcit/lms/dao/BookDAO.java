@@ -85,8 +85,8 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 	 */
 	public List<Book> readAvailableBooks(Integer borrowerId, Integer branchId) {
 		return template.query(
-				"select * from tbl_book where bookId NOT IN (select bookId from tbl_book_loans where branchId = ? and cardNo = ? and dateIn IS NULL) and bookId IN (select bookId from tbl_book_copies where branchId = ? and noOfCopies >= 0)",
-				new Object[] { branchId, borrowerId, branchId }, this);
+				"select * from tbl_book where bookId IN (select bookId from tbl_book_copies where branchId = ? and noOfCopies >= 0)",
+				new Object[] { branchId }, this);
 	}
 
 	public void updateBook(Book book) throws ClassNotFoundException, SQLException {

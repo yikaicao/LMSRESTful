@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
+import com.gcit.lms.entity.BookLoan;
 import com.gcit.lms.entity.Borrower;
 
 public class BorrowerDAO extends BaseDAO implements ResultSetExtractor<List<Borrower>> {
@@ -27,6 +28,11 @@ public class BorrowerDAO extends BaseDAO implements ResultSetExtractor<List<Borr
 		template.update(
 				"insert into tbl_book_loans (bookId, branchId, cardNo, dateOut, dueDate) values(?, ?, ?, CURDATE(), DATE_ADD(CURDATE(),INTERVAL 7 DAY))",
 				new Object[] { bookId, branchId, borrowerId });
+	}
+
+	public void returnBookLoan(BookLoan bl) {
+		template.update("update tbl_book_loans set dateIn = ? where bookId = ? and branchId = ? and cardNo = ?",
+				new Object[] { bl.getDateIn(), bl.getBookId(), bl.getBranchId(), bl.getCardNo() });
 	}
 
 	@Override
