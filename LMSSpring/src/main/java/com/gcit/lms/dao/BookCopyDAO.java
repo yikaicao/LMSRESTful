@@ -12,6 +12,11 @@ import com.gcit.lms.entity.BookCopy;
 
 public class BookCopyDAO extends BaseDAO implements ResultSetExtractor<List<BookCopy>> {
 
+	public void addBookCopy(BookCopy bc) {
+		template.update("insert into tbl_book_copies values (?, ?, ?)",
+				new Object[] { bc.getBookId(), bc.getBranchId(), bc.getNoOfCopies() });
+	}
+
 	public List<BookCopy> readBookCopyByBranchID(Integer branchId) throws DataAccessException {
 		return template.query("select * from tbl_book_copies where branchId = ?", new Object[] { branchId }, this);
 	}

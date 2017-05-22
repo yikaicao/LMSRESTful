@@ -1,5 +1,6 @@
 package com.gcit.lms.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gcit.lms.dao.BookCopyDAO;
 import com.gcit.lms.dao.BookDAO;
 import com.gcit.lms.dao.BranchDAO;
+import com.gcit.lms.entity.Author;
 import com.gcit.lms.entity.Book;
 import com.gcit.lms.entity.BookCopy;
 import com.gcit.lms.entity.Branch;
@@ -25,7 +27,7 @@ public class LibrarianService {
 
 	@Autowired
 	BookDAO bdao;
-	
+
 	@Autowired
 	BranchDAO brdao;
 
@@ -65,6 +67,12 @@ public class LibrarianService {
 
 	// %%%%%%%%%% book copy services %%%%%%%%%%
 
+	@Transactional
+	@RequestMapping(value = "/bookcopies", method = RequestMethod.POST, consumes = "application/json")
+	public void createAuthor(@RequestBody BookCopy bc) {
+		bcdao.addBookCopy(bc);
+	}
+
 	@RequestMapping(value = "/bookcopies/{branchId}", method = RequestMethod.GET, produces = "application/json")
 	public List<BookCopy> readBookCopy(@PathVariable Integer branchId) {
 		return bcdao.readBookCopyByBranchID(branchId);
@@ -75,9 +83,9 @@ public class LibrarianService {
 	public void updateBook(@RequestBody BookCopy bc) {
 		bcdao.updateBookCopy(bc);
 	}
-	
+
 	// %%%%%%%%%% book services %%%%%%%%%%
-	
+
 	@RequestMapping(value = "/missedbooks/{branchId}", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> readBook(@PathVariable Integer branchId) {
 		return bdao.readAllBooksNotAtBranch(branchId);

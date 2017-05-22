@@ -93,10 +93,11 @@
 					<div class="modal-body">
 
 						<!-- Book Copies Table -->
-						<select class="form-control">
-							<option ng-repeat="b in missedBooks" ng-selected="">{{b.title}}</option>
-						</select> <br /> <input class="form-control" ng-model="b.addedCopies"
+						<select class="form-control" ng-model="b.bookId">
+							<option ng-repeat="b in missedBooks" ng-value="b.bookId">{{b.title}}</option>
+						</select> <br /> <input class="form-control" ng-model="b.noOfCopies"
 							type="number" min="0">
+							
 
 						<!-- End of Book Copies Table -->
 					</div>
