@@ -45,12 +45,16 @@
 						<input type="text" ng-model="branch.branchName"> <br />
 						<p>Branch Address:</p>
 						<input type="text" ng-model="branch.branchAddress"> <br />
+						<br />
 
 						<!-- Book Copies Table -->
 						<table class="table table-striped">
-
-							<input class="form-control" type="text"
-								ng-repeat="bc in bookCopies" placeholder="bc.title" disabled>
+							<tr ng-repeat="bc in branch.bookCopies">
+								<td><input class="form-control" type="text"
+									placeholder="{{bc.bookName}}" disabled></td>
+								<td><input class="form-control" type="number"
+									value="{{bc.noOfCopies}}" min="0" max="99"></td>
+							</tr>
 						</table>
 						<!-- End of Book Copies Table -->
 
