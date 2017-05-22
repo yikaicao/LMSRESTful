@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,16 @@ public class LibrarianService {
 		try {
 				branches = brdao.readAllBranches();
 			return branches;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@RequestMapping(value = "/branches/{primaryKey}", method = RequestMethod.GET, produces = "application/json")
+	public Branch readBranch(@PathVariable Integer primaryKey) {
+		try {
+			return brdao.readBranchByPK(primaryKey);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}

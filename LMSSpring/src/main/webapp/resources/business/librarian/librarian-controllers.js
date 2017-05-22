@@ -64,17 +64,10 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 	/**
 	 * helper functions for updating a new book
 	 */
-	$scope.showEditItemModal = function(itemId) {
-		bookService.getBookByPKService(itemId).then(function(data) {
-			$scope.thisBookGenres = [];
-			$scope.book = data;
-			$scope.editItemModal = true;
-			$scope.book.genres.forEach(function(e) {
-				$scope.thisBookGenres.push(e.genreId);
-			});
-		});
-		$http.get("http://localhost:8080/lms/genres").success(function(data) {
-			$scope.genres = data;
+	$scope.showManageBranchModal = function(itemId) {
+		$scope.manageBranchModal = true;
+		librarianService.getBranchByPKService(itemId).then(function(data) {
+			$scope.branch = data;
 		});
 	};
 
@@ -158,8 +151,8 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 	}
 	
 	$scope.closeModal = function() {
-		$scope.editItemModal = false;
-		$scope.deleteItemModal = false;
+		$scope.manageBranchModal = false;
+		$scope.deleteBranchModal = false;
 	};
 
 })
