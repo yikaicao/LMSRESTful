@@ -46,7 +46,7 @@ public class AdminService {
 
 	@Autowired
 	PublisherDAO pdao;
-	
+
 	@Autowired
 	GenreDAO gdao;
 
@@ -96,6 +96,7 @@ public class AdminService {
 		return null;
 	}
 
+	@Transactional
 	@RequestMapping(value = "/authors", method = RequestMethod.PUT)
 	public void updateAuthor(@RequestBody Author author) {
 		try {
@@ -105,6 +106,7 @@ public class AdminService {
 		}
 	}
 
+	@Transactional
 	@RequestMapping(value = "/authors/{primaryKey}", method = RequestMethod.DELETE)
 	public void deleteAuthor(@PathVariable Integer primaryKey) {
 		try {
@@ -121,13 +123,25 @@ public class AdminService {
 		return new Book();
 	}
 
+	@Transactional
+	@RequestMapping(value = "/addBook", method = RequestMethod.POST, consumes = "application/json")
+	public void createBook(@RequestBody Book book) {
+		try {
+			bdao.addBook(book);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@RequestMapping(value = "/books", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> readBooks(@RequestParam(value = "pageNo", required = false) Integer pageNo,
 			@RequestParam(value = "searchString", required = false) String searchString) {
 		List<Book> books = new ArrayList<>();
 		books = bdao.readAllBooks();
-		for (Book b : books)
+		for (Book b : books) {
 			b.setAuthors(adao.readAllAuthorsByBookID(b.getBookId()));
+			b.setGenres(gdao.readAllGenresByBookID(b.getBookId()));
+		}
 		return books;
 	}
 
@@ -138,11 +152,15 @@ public class AdminService {
 			@RequestParam(value = "searchString", required = false) String searchString) {
 		return pdao.readAllPublishers();
 	}
-	
+
 	// %%%%%%%%%% genre services %%%%%%%%%%
-	
+	@RequestMapping(value = "/initGenre", method = RequestMethod.GET, produces = "application/json")
+	public Genre initGenre() {
+		return new Genre();
+	}
+
 	@RequestMapping(value = "/genres", method = RequestMethod.GET, produces = "application/json")
-	public List<Genre> readGenres(){
+	public List<Genre> readGenres() {
 		return gdao.readAllGenres();
 	}
 

@@ -34,6 +34,7 @@
 				<th>#</th>
 				<th><a ng-click="sort()">Book Title</a></th>
 				<th>Authors</th>
+				<th>Genres</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -44,6 +45,7 @@
 				<td>{{$index+1}}</td>
 				<td>{{b.title}}</td>
 				<td><span ng-repeat="a in b.authors">{{a.authorName}}{{$last ? '' :', '}}</span></td>
+				<td><span ng-repeat="g in b.genres">{{g.genreName}}{{$last ? '' :', '}}</span></td>
 				<td><button type="button" class="btn btn-primary"
 						ng-click="showEditBookModal(b.bookId)">Update</button></td>
 				<td><button type="button" class="btn btn-danger"

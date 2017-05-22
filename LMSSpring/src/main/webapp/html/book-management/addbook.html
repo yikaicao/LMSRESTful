@@ -6,15 +6,9 @@
 
 
 	<input type="text" ng-model="item.title"> <br />
-	<div class="checbox">
-		<label ng-repeat="p in publishers"> <input type="checkbox"
-			ng-click="toggleSelection(p.publisherName)">
-			{{p.publisherName}}
-		</label>
-	</div>
 	
 	<div class="checbox">
-		<label ng-repeat="g in genres"> <input type="checkbox" ng-click="selectGenre()">
+		<label ng-repeat="g in genres"> <input type="checkbox" ng-click="addGenre(g.genreId)">
 			{{g.genreName}}
 		</label>
 	</div>

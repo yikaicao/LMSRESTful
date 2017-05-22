@@ -15,7 +15,13 @@ public class GenreDAO extends BaseDAO implements ResultSetExtractor<List<Genre>>
 	public List<Genre> readAllGenres() {
 		return template.query("select * from tbl_genre", this);
 	}
-	
+
+	public List<Genre> readAllGenresByBookID(Integer bookId) {
+		return template.query(
+				"select * from tbl_genre where genre_id IN (Select genre_id from tbl_book_genres where bookId = ?)",
+				new Object[] { bookId }, this);
+	}
+
 	@Override
 	public List<Genre> extractData(ResultSet rs) throws SQLException, DataAccessException {
 		List<Genre> genres = new ArrayList<>();
@@ -27,7 +33,5 @@ public class GenreDAO extends BaseDAO implements ResultSetExtractor<List<Genre>>
 		}
 		return genres;
 	}
-
-	
 
 }
