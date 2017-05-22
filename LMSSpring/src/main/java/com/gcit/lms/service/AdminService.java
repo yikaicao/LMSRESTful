@@ -20,6 +20,7 @@ import com.gcit.lms.dao.GenreDAO;
 import com.gcit.lms.dao.PublisherDAO;
 import com.gcit.lms.entity.Author;
 import com.gcit.lms.entity.Book;
+import com.gcit.lms.entity.BookLoan;
 import com.gcit.lms.entity.Genre;
 import com.gcit.lms.entity.Publisher;
 
@@ -198,6 +199,14 @@ public class AdminService {
 	@RequestMapping(value = "/genres", method = RequestMethod.GET, produces = "application/json")
 	public List<Genre> readGenres() {
 		return gdao.readAllGenres();
+	}
+
+	// %%%%%%%%%% book loan services %%%%%%%%%%
+
+	@Transactional
+	@RequestMapping(value = "/bookloans", method = RequestMethod.PUT)
+	public void updateBookLoan(@RequestBody BookLoan bl) {
+
 	}
 
 }

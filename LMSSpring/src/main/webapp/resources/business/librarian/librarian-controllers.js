@@ -1,6 +1,6 @@
 lmsApp.controller("librarianController", function($scope, $http, $window, $location,
 		librarianService, $filter, Pagination) {
-	if ($location.$$path === "/viewbranches") {
+	if ($location.$$path === "/viewbranches" || $location.$$path === "/branch") {
 		librarianService.getAllItemsService().then(
 				function(backendItemsList) {
 					$scope.items = backendItemsList;
@@ -83,7 +83,11 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 	}
 	
 	$scope.addBookCopy = function(b) {
-		if ($scope.b == undefined) {
+		if (b == undefined) {
+			alert("need to select a book");
+			return;
+		}
+		if (b.bookId == null) {
 			alert("need to select a book");
 			return;
 		}

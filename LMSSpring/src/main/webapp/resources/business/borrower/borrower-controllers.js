@@ -47,7 +47,7 @@ lmsApp.controller("borrowerController", function($scope, $http, $window,
 							backendAvailableBooks[i].noOfCopies = data.noOfCopies;
 						});
 						$http.get("http://localhost:8080/lms/bookloans/"+$scope.branchId+"/"+$scope.borrowerId+"/"+e.bookId).success(function(backendBookLoan){
-							console.log(backendBookLoan);
+							//console.log(backendBookLoan);
 							$scope.bookCopies[i].dateIn = backendBookLoan.dateIn; 
 						});
 					});
@@ -95,7 +95,7 @@ lmsApp.controller("borrowerController", function($scope, $http, $window,
 	}
 	
 	$scope.allowCheckout = function (bc) {
-		console.log(bc);
+		//console.log(bc);
 		if (bc.noOfCopies < 1)
 			return false;
 		if (bc.dateIn === null)
