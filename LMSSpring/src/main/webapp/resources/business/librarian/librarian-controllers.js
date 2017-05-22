@@ -57,6 +57,11 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 	};
 	
 	$scope.updateBookCopies = function (bc) {
+		if (bc.noOfCopies == undefined) {
+			alert("input needs to be equal to or greater than 0");
+			return;
+		}
+		
 		$http.put("http://localhost:8080/lms/bookcopies", bc).success(function() {
 			$scope.closeModal();
 			librarianService.getAllItemsService().then(
@@ -77,6 +82,21 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 	}
 	// end of managing branch detail
 	
+	/**
+	 * helper functions for adding new book copy to the branch
+	 */
+	$scope.showAddBookModal = function(branchId){
+		$scope.addBookModal = true;
+		librarianService.getBooksNotAtBranchService(branchId).then(function(data) {
+			$scope.missedBooks = data;
+			$scope.addCopyToBranch = branchId;
+		});
+	}
+	
+	$scope.addBookCopy = function(b) {
+		console.log($scope.b);
+	}
+	// end of adding new copy
 	
 
 	/**
@@ -112,6 +132,7 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 	
 	$scope.closeModal = function() {
 		$scope.manageBranchModal = false;
+		$scope.addBookModal = false;
 		$scope.deleteBranchModal = false;
 	};
 

@@ -11,7 +11,7 @@
 				<th>Branch Name</th>
 				<th>Branch Address</th>
 				<th>Branch Detail</th>
-				<th>Delete</th>
+				<th>Add Book</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -21,8 +21,8 @@
 				<td>{{br.branchAddress}}</td>
 				<td><button type="button" class="btn btn-success"
 						ng-click="showManageBranchModal(br.branchId)">Manage</button></td>
-				<td><button type="button" class="btn btn-danger"
-						ng-click="showDeleteBookModal(b.bookId)">Delete</button></td>
+				<td><button type="button" class="btn btn-primary"
+						ng-click="showAddBookModal(br.branchId)">Add</button></td>
 			</tr>
 		</tbody>
 	</table>
@@ -54,10 +54,12 @@
 							<tr ng-repeat="bc in branch.bookCopies">
 								<td><input class="form-control" type="text"
 									placeholder="{{bc.bookName}}" disabled></td>
-								<td><input class="form-control" type="number" min="0"
+								<td><input class="form-control" type="number" ng-min="0"
 									ng-model="bc.noOfCopies"></td>
 								<td><button type="button" class="btn btn-warning"
 										ng-click="updateBookCopies(bc)">Update</button></td>
+							</tr>
+							<tr>
 							</tr>
 						</table>
 						<!-- End of Book Copies Table -->
@@ -65,6 +67,43 @@
 
 					</div>
 					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of Modal -->
+
+	<!-- Modal -->
+	<div class="modal fade bs-example-modal-lg" id="addBookModal"
+		modal="addBookModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-jlabel="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Add New Book to Branch</h4>
+					</div>
+					<div class="modal-body">
+
+						<!-- Book Copies Table -->
+						<select class="form-control">
+							<option ng-repeat="b in missedBooks" ng-selected="">{{b.title}}</option>
+						</select> <br /> <input class="form-control" ng-model="b.addedCopies"
+							type="number" min="0">
+
+						<!-- End of Book Copies Table -->
+					</div>
+
+					<div class="modal-footer">
+					<button type="button" class="btn btn-success"
+										ng-click="addBookCopy(b)">Add</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal"
 							ng-click="closeModal()">Close</button>
 					</div>

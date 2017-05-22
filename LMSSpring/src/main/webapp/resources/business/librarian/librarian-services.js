@@ -33,6 +33,17 @@ lmsApp.factory("librarianService", function($http, librarianConstants) {
 			}).then(function() {
 				return getItemData;
 			})
+		},
+		
+		getBooksNotAtBranchService: function(branchId) {
+			var getItemData = {};
+			return $http({
+				url: librarianConstants.GET_BOOK_NOT_AT_BRANCH_URL + branchId
+			}).success(function(data) {
+				getItemData = data;
+			}).then(function(){
+				return getItemData;
+			})
 		}
 	}
 })

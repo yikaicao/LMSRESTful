@@ -68,6 +68,12 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 		return template.query("select * from tbl_book where title like ?", new Object[] { bookName }, this);
 	}
 
+	public List<Book> readAllBooksNotAtBranch(Integer branchId) {
+		return template.query(
+				"select * from tbl_book where bookId NOT IN (select bookId from tbl_book_copies where branchId = ?)",
+				new Object[] { branchId }, this);
+	}
+
 	public void updateBook(Book book) throws ClassNotFoundException, SQLException {
 		template.update("update tbl_book set title = ? where bookId = ?",
 				new Object[] { book.getTitle(), book.getBookId() });
