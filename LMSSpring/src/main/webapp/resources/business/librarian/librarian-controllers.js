@@ -5,18 +5,7 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 				function(backendItemsList) {
 					$scope.items = backendItemsList;
 				});
-	} else if ($location.$$path === "/addbook") {
-		$http.get("http://localhost:8080/lms/initBook").success(function(data) {
-			$scope.item = data;
-		});
-		$http.get("http://localhost:8080/lms/publishers").success(
-				function(data) {
-					$scope.publishers = data;
-				});
-		$http.get("http://localhost:8080/lms/genres").success(function(data) {
-			$scope.genres = data;
-		});
-	}
+	} 
 
 	/**
 	 * helper functions for managing branch detail

@@ -1,0 +1,36 @@
+<div ng-controller="borrowerController">
+	<div class="page-header">
+		<h1>List of Branches in LMS</h1>
+	</div>
+
+	<!-- Table for listing authors -->
+	<table class="table" id="branchesTable">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Branch Name</th>
+				<th>Branch Address</th>
+				<th>Check Out</th>
+				<th>Return</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="br in items">
+				<td>{{$index+1}}</td>
+				<td>{{br.branchName}}</td>
+				<td>{{br.branchAddress}}</td>
+				<td><button type="button" class="btn btn-success"
+						ng-click="showManageBranchModal(br.branchId)">Check Out</button></td>
+				<td><button type="button" class="btn btn-primary"
+						ng-click="showAddBookModal(br.branchId)">Return</button></td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- End of Table -->
+
+
+</div>
+
+
+
+
