@@ -20,9 +20,9 @@
 				<td>{{br.branchName}}</td>
 				<td>{{br.branchAddress}}</td>
 				<td><button type="button" class="btn btn-success"
-						ng-click="showValidateModal(br.branchId)">Check Out</button></td>
+						ng-click="showValidateModal(br.branchId, 1)">Check Out</button></td>
 				<td><button type="button" class="btn btn-primary"
-						ng-click="showValidateModal(br.branchId)">Return</button></td>
+						ng-click="showValidateModal(br.branchId, 2)">Return</button></td>
 			</tr>
 		</tbody>
 	</table>
@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<!-- End of Modal -->
-	
+
 	<!-- Modal -->
 	<div class="modal fade bs-example-modal-lg" id="checkoutModal"
 		modal="checkoutModal" tabindex="-1" role="dialog"
@@ -71,17 +71,83 @@
 							aria-jlabel="Close" ng-click="closeModal()">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<h4 class="modal-title">List of Available Books for Borrower {{borrower.name}}</h4>
+						<h4 class="modal-title">Available Books for Borrower
+							{{borrower.name}} at Branch {{branchId}}</h4>
 					</div>
 
 					<div class="modal-body">
+						<!-- Book Copies Table -->
+						<table class="table table-striped">
+							<tr>
+								<th>Book Name</th>
+								<th>Copies Left</th>
+								<th>Action</th>
+							</tr>
+							<tr ng-repeat="bc in bookCopies">
+								<td><input class="form-control" type="text"
+									placeholder="{{bc.title}}" disabled></td>
+								<td><input class="form-control" type="text"
+									placeholder="{{bc.noOfCopies}}" disabled></td>
+								<td><button type="button" class="btn btn-warning"
+										ng-click="checkoutBookCopy(bc)" ng-show="bc.noOfCopies > 0">Check
+										Out</button></td>
+							</tr>
+						</table>
+						<!-- End of Book Copies Table -->
 					</div>
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal"
 							ng-click="closeModal()">Close</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal"
-							ng-click="validate()">Sign In</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of Modal -->
+
+	<!-- Modal -->
+	<div class="modal fade bs-example-modal-lg" id="returnModal"
+		modal="returnModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-jlabel="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Books Borrowed by {{borrower.name}}
+							at Branch {{branchId}}</h4>
+					</div>
+
+					<div class="modal-body">
+						<!-- Book Copies Table -->
+						<table class="table table-striped">
+							<tr>
+								<th>Book Name</th>
+								<th>Date Out</th>
+								<th>Due Date</th>
+								<th>Action</th>
+							</tr>
+							<tr ng-repeat="bl in bookLoans">
+								<td><input class="form-control" type="text"
+									placeholder="{{bl.title}}" disabled></td>
+								<td><input class="form-control" type="text"
+									placeholder="{{bl.dateOut}}" disabled></td>
+								<td><input class="form-control" type="text"
+									placeholder="{{bl.dueDate}}" disabled></td>
+								<td><button type="button" class="btn btn-warning"
+										ng-click="checkoutBookCopy(bc)" ng-show="bc.noOfCopies > 0">Return</button></td>
+							</tr>
+						</table>
+						<!-- End of Book Copies Table -->
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
 					</div>
 				</div>
 			</div>

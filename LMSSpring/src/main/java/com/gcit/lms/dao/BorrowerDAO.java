@@ -21,6 +21,14 @@ public class BorrowerDAO extends BaseDAO implements ResultSetExtractor<List<Borr
 		return null;
 	}
 
+	public void addBookLoan(Integer branchId, Integer bookId, Integer borrowerId) {
+		template.update("delete from tbl_book_loans where bookId = ? and branchId = ? and cardNo = ?",
+				new Object[] { bookId, branchId, borrowerId });
+		template.update(
+				"insert into tbl_book_loans (bookId, branchId, cardNo, dateOut, dueDate) values(?, ?, ?, CURDATE(), DATE_ADD(CURDATE(),INTERVAL 7 DAY))",
+				new Object[] { bookId, branchId, borrowerId });
+	}
+
 	@Override
 	public List<Borrower> extractData(ResultSet rs) throws SQLException, DataAccessException {
 		List<Borrower> borrowers = new ArrayList<>();

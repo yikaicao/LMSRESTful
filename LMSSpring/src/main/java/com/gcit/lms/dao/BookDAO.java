@@ -74,6 +74,21 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 				new Object[] { branchId }, this);
 	}
 
+	/**
+	 * criteria: a book is available for a borrower if he/she did not check out
+	 * that book before or has turned in already and that book has to have more
+	 * than 0 copy in this branch
+	 * 
+	 * @param borrowerId
+	 * @param branchId
+	 * @return
+	 */
+	public List<Book> readAvailableBooks(Integer borrowerId, Integer branchId) {
+		return template.query(
+				"select * from tbl_book where bookId NOT IN (select bookId from tbl_book_loans where branchId = ? and cardNo = ? and dateIn IS NULL) and bookId IN (select bookId from tbl_book_copies where branchId = ? and noOfCopies >= 0)",
+				new Object[] { branchId, borrowerId, branchId }, this);
+	}
+
 	public void updateBook(Book book) throws ClassNotFoundException, SQLException {
 		template.update("update tbl_book set title = ? where bookId = ?",
 				new Object[] { book.getTitle(), book.getBookId() });
@@ -105,10 +120,6 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 			books.add(b);
 		}
 		return books;
-	}
-
-	public List<Book> readAvailableBooks(Integer borrowerId, Integer branchId) {
-		return null;
 	}
 
 }

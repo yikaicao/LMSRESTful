@@ -21,9 +21,23 @@ public class BookCopyDAO extends BaseDAO implements ResultSetExtractor<List<Book
 		return template.query("select * from tbl_book_copies where branchId = ?", new Object[] { branchId }, this);
 	}
 
+	public BookCopy readBookCopyByBranchIdAndBookId(Integer branchId, Integer bookId) {
+		List<BookCopy> bcs = template.query("select * from tbl_book_copies where branchId = ? and bookId = ?",
+				new Object[] { branchId, bookId }, this);
+		if (bcs != null && !bcs.isEmpty()) {
+			return bcs.get(0);
+		}
+		return null;
+	}
+
 	public void updateBookCopy(BookCopy bc) throws DataAccessException {
 		template.update("update tbl_book_copies set noOfCopies = ? where bookId = ? and branchId = ?",
 				new Object[] { bc.getNoOfCopies(), bc.getBookId(), bc.getBranchId() });
+	}
+
+	public void decrementBookCopy(Integer branchId, Integer bookId) {
+		template.update("update tbl_book_copies set noOfCopies = noOfCopies - 1 where bookId = ? and branchId = ?",
+				new Object[] { bookId, branchId });
 	}
 
 	@Override
