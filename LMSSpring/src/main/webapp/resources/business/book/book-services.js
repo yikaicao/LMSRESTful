@@ -11,14 +11,14 @@ lmsApp.factory("bookService", function($http, bookConstants){
 			})
 		},
 	
-		getAuthorByPKService: function(authorId){
-			var getAuthorByPkData = {};
+		getBookByPKService: function(bookId){
+			var getBookByPkData = {};
 			return $http({
-				url: authorConstants.GET_AUTHOR_BY_PK_URL+authorId
+				url: bookConstants.GET_BOOK_BY_PK_URL+bookId
 			}).success(function(data){
-				getAuthorByPkData = data;
+				getBookByPkData = data;
 			}).then(function(){
-				return getAuthorByPkData;
+				return getBookByPkData;
 			})
 		}
 	}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -143,6 +144,28 @@ public class AdminService {
 			b.setGenres(gdao.readAllGenresByBookID(b.getBookId()));
 		}
 		return books;
+	}
+
+	@RequestMapping(value = "/books/{primaryKey}", method = RequestMethod.GET, produces = "application/json")
+	public Book readBook(@PathVariable Integer primaryKey) {
+		try {
+			Book toReturn = bdao.readBookByID(primaryKey);
+			toReturn.setGenres(gdao.readAllGenresByBookID(toReturn.getBookId()));
+			return toReturn;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Transactional
+	@RequestMapping(value = "/books", method = RequestMethod.PUT)
+	public void updateBook(@RequestBody Book book) {		
+		try {
+			bdao.updateBook(book);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// %%%%%%%%%% publisher services %%%%%%%%%%
