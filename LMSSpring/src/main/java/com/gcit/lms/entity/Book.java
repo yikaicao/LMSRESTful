@@ -3,8 +3,8 @@ package com.gcit.lms.entity;
 import java.io.Serializable;
 import java.util.List;
 
-public class Book implements Serializable{
-	
+public class Book implements Serializable {
+
 	private static final long serialVersionUID = -1070838265691816263L;
 
 	private Integer bookId;
@@ -12,67 +12,85 @@ public class Book implements Serializable{
 	private List<Author> authors;
 	private Publisher publisher;
 	public List<Genre> genres;
+
 	/**
 	 * @return the bookId
 	 */
 	public Integer getBookId() {
 		return bookId;
 	}
+
 	/**
-	 * @param bookId the bookId to set
+	 * @param bookId
+	 *            the bookId to set
 	 */
 	public void setBookId(Integer bookId) {
 		this.bookId = bookId;
 	}
+
 	/**
 	 * @return the title
 	 */
 	public String getTitle() {
 		return title;
 	}
+
 	/**
-	 * @param title the title to set
+	 * @param title
+	 *            the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	/**
 	 * @return the authors
 	 */
 	public List<Author> getAuthors() {
 		return authors;
 	}
+
 	/**
-	 * @param authors the authors to set
+	 * @param authors
+	 *            the authors to set
 	 */
 	public void setAuthors(List<Author> authors) {
 		this.authors = authors;
 	}
+
 	/**
 	 * @return the publisher
 	 */
 	public Publisher getPublisher() {
 		return publisher;
 	}
+
 	/**
-	 * @param publisher the publisher to set
+	 * @param publisher
+	 *            the publisher to set
 	 */
 	public void setPublisher(Publisher publisher) {
 		this.publisher = publisher;
 	}
+
 	/**
 	 * @return the genres
 	 */
 	public List<Genre> getGenres() {
 		return genres;
 	}
+
 	/**
-	 * @param genres the genres to set
+	 * @param genres
+	 *            the genres to set
 	 */
 	public void setGenres(List<Genre> genres) {
 		this.genres = genres;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -83,7 +101,10 @@ public class Book implements Serializable{
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

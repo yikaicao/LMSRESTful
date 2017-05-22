@@ -63,6 +63,11 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 				new Object[] { authorId }, this);
 	}
 
+	public List<Book> readAllBooksByName(String bookName) {
+		bookName = "%" + bookName + "%";
+		return template.query("select * from tbl_book where title like ?", new Object[] { bookName }, this);
+	}
+
 	public void updateBook(Book book) throws ClassNotFoundException, SQLException {
 		template.update("update tbl_book set title = ? where bookId = ?",
 				new Object[] { book.getTitle(), book.getBookId() });
@@ -94,11 +99,6 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 			books.add(b);
 		}
 		return books;
-	}
-
-	public List<Book> readAllBooksByName(String bookName) {
-		bookName = "%" + bookName + "%";
-		return template.query("select * from tbl_book where title like ?", new Object[] { bookName }, this);
 	}
 
 }
