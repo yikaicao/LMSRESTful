@@ -1,0 +1,119 @@
+<div ng-controller="bookController">
+	<div class="page-header">
+		<h1>List of Branches in LMS</h1>
+	</div>
+
+
+	<!-- Pagination -->
+	<div class="col-md-10">
+		<ul class="pagination">
+			<li><a href="" ng-click="pagination.prevPage()">&laquo;</a></li>
+			<li ng-repeat="n in [] | range: pagination.numPages"
+				ng-class="{active: n == pagination.page}"><a href=""
+				ng-click="pagination.toPageId(n)">{{n + 1}}</a></li>
+			<li><a href="" ng-click="pagination.nextPage()">&raquo;</a></li>
+		</ul>
+	</div>
+	<!-- End of Pagination -->
+
+
+
+	<!-- Table for listing authors -->
+	<table class="table" id="booksTable">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th><a ng-click="sort()">Book Title</a></th>
+				<th>Authors</th>
+				<th>Genres</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
+				ng-repeat="b in items | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage">
+				<td>{{$index+1}}</td>
+				<td>{{b.title}}</td>
+				<td><span ng-repeat="a in b.authors">{{a.authorName}}{{$last
+						? '' :', '}}</span></td>
+				<td><span ng-repeat="g in b.genres">{{g.genreName}}{{$last
+						? '' :', '}}</span></td>
+				<td><button type="button" class="btn btn-primary"
+						ng-click="showEditItemModal(b.bookId)">Update</button></td>
+				<td><button type="button" class="btn btn-danger"
+						ng-click="showDeleteBookModal(b.bookId)">Delete</button></td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- End of Table -->
+
+	<!-- Modal for editing an existed book -->
+	<div class="modal fade bs-example-modal-lg" id="editItemModal"
+		modal="editItemModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Update Book Details</h4>
+					</div>
+					<div class="modal-body">
+						<p>Book title:</p>
+						<input type="text" ng-model="book.title"> <br />
+						<p>Book genres:</p>
+						<label ng-repeat="g in genres" > <input type="checkbox"
+							ng-click="updateGenre(g.genreId)" ng-checked="thisBookGenres.indexOf(g.genreId) > -1"> {{g.genreName}}
+						</label>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
+						<button type="button" class="btn btn-primary"
+							ng-click="updateItem()">Update</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of Modal -->
+	
+	<!-- Modal for deleting an existed author -->
+	<div class="modal fade bs-example-modal-lg" id="deleteItemModal"
+		modal="deleteItemModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Delete Book</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to delete Book: {{book.title}}?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
+						<button type="button" class="btn btn-danger"
+							ng-click="deleteItem()">Confirm</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- End of Modal -->
+
+
+</div>
+
+
