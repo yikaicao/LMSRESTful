@@ -20,13 +20,74 @@
 				<td>{{br.branchName}}</td>
 				<td>{{br.branchAddress}}</td>
 				<td><button type="button" class="btn btn-success"
-						ng-click="showManageBranchModal(br.branchId)">Check Out</button></td>
+						ng-click="showValidateModal(br.branchId)">Check Out</button></td>
 				<td><button type="button" class="btn btn-primary"
-						ng-click="showAddBookModal(br.branchId)">Return</button></td>
+						ng-click="showValidateModal(br.branchId)">Return</button></td>
 			</tr>
 		</tbody>
 	</table>
 	<!-- End of Table -->
+
+	<!-- Modal -->
+	<div class="modal fade bs-example-modal-lg" id="validateModal"
+		modal="validateModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-jlabel="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Enter Borrower ID</h4>
+					</div>
+
+					<div class="modal-body">
+						<input type="text" ng-model="borrowerId">
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal"
+							ng-click="validate()">Sign In</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of Modal -->
+	
+	<!-- Modal -->
+	<div class="modal fade bs-example-modal-lg" id="checkoutModal"
+		modal="checkoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-jlabel="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">List of Available Books for Borrower {{borrower.name}}</h4>
+					</div>
+
+					<div class="modal-body">
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal"
+							ng-click="validate()">Sign In</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of Modal -->
 
 
 </div>

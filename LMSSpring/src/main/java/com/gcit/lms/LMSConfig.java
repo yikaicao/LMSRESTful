@@ -11,10 +11,12 @@ import org.springframework.transaction.PlatformTransactionManager;
 import com.gcit.lms.dao.AuthorDAO;
 import com.gcit.lms.dao.BookCopyDAO;
 import com.gcit.lms.dao.BookDAO;
+import com.gcit.lms.dao.BorrowerDAO;
 import com.gcit.lms.dao.BranchDAO;
 import com.gcit.lms.dao.GenreDAO;
 import com.gcit.lms.dao.PublisherDAO;
 import com.gcit.lms.service.AdminService;
+import com.gcit.lms.service.BorrowerService;
 import com.gcit.lms.service.LibrarianService;
 
 @Configuration
@@ -78,6 +80,11 @@ public class LMSConfig {
 	}
 	
 	@Bean
+	public BorrowerDAO bodao(){
+		return new BorrowerDAO();
+	}
+	
+	@Bean
 	public AdminService adminService(){
 		return new AdminService();
 	}
@@ -85,5 +92,10 @@ public class LMSConfig {
 	@Bean
 	public LibrarianService librarianService(){
 		return new LibrarianService();
+	}
+	
+	@Bean
+	public BorrowerService borrowerService(){
+		return new BorrowerService();
 	}
 }

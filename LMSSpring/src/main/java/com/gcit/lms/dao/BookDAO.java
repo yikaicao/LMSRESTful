@@ -107,4 +107,8 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 		return books;
 	}
 
+	public List<Book> readAvailableBooks(Integer borrowerId, Integer branchId) {
+		return null;
+	}
+
 }
