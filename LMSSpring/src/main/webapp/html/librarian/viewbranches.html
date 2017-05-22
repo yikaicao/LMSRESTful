@@ -9,6 +9,7 @@
 			<tr>
 				<th>#</th>
 				<th>Branch Name</th>
+				<th>Branch Address</th>
 				<th>Branch Detail</th>
 				<th>Delete</th>
 			</tr>
@@ -17,6 +18,7 @@
 			<tr ng-repeat="br in items">
 				<td>{{$index+1}}</td>
 				<td>{{br.branchName}}</td>
+				<td>{{br.branchAddress}}</td>
 				<td><button type="button" class="btn btn-success"
 						ng-click="showManageBranchModal(br.branchId)">Manage</button></td>
 				<td><button type="button" class="btn btn-danger"
@@ -35,25 +37,27 @@
 				<div>
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close" ng-click="closeModal()">
+							aria-jlabel="Close" ng-click="closeModal()">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<h4 class="modal-title">Manage Branch Detail</h4>
 					</div>
 					<div class="modal-body">
-						<p>Branch Name:</p>
-						<input type="text" ng-model="branch.branchName"> <br />
-						<p>Branch Address:</p>
-						<input type="text" ng-model="branch.branchAddress"> <br />
-						<br />
+						<span>Name: <input type="text" ng-model="branch.branchName">Address:<input
+							type="text" ng-model="branch.branchAddress">
+							<button type="button" class="btn btn-success btn-sm"
+								ng-click="updateBranch()">Update</button>
+						</span> <br /> <br />
 
 						<!-- Book Copies Table -->
 						<table class="table table-striped">
 							<tr ng-repeat="bc in branch.bookCopies">
 								<td><input class="form-control" type="text"
 									placeholder="{{bc.bookName}}" disabled></td>
-								<td><input class="form-control" type="number"
-									value="{{bc.noOfCopies}}" min="0" max="99"></td>
+								<td><input class="form-control" type="number" min="0"
+									ng-model="bc.noOfCopies"></td>
+								<td><button type="button" class="btn btn-warning"
+										ng-click="updateBookCopies(bc)">Update</button></td>
 							</tr>
 						</table>
 						<!-- End of Book Copies Table -->
@@ -63,8 +67,6 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal"
 							ng-click="closeModal()">Close</button>
-						<button type="button" class="btn btn-primary"
-							ng-click="updateItem()">Update</button>
 					</div>
 				</div>
 			</div>

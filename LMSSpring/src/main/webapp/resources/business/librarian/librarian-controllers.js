@@ -39,6 +39,7 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 					
 					var bc = {
 							bookId: bc.bookId,
+							branchId: bc.branchId,
 							noOfCopies: bc.noOfCopies
 					};
 					
@@ -50,10 +51,33 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 					$scope.branch.bookCopies.push(bc);
 				});
 				
-				//DEBUG: console.log($scope.branch.bookCopies);
+				// DEBUG: console.log($scope.branch.bookCopies);
 			});
 		});
 	};
+	
+	$scope.updateBookCopies = function (bc) {
+		$http.put("http://localhost:8080/lms/bookcopies", bc).success(function() {
+			$scope.closeModal();
+			librarianService.getAllItemsService().then(
+					function(backendItemsList) {
+						$scope.items = backendItemsList;
+					});
+		});
+	}
+	
+	$scope.updateBranch = function() {
+		$http.put("http://localhost:8080/lms/branches", $scope.branch).success(function(){
+			$scope.closeModal();
+			librarianService.getAllItemsService().then(
+					function(backendItemsList) {
+						$scope.items = backendItemsList;
+					});
+		});
+	}
+	// end of managing branch detail
+	
+	
 
 	/**
 	 * helper functions for deleting a branch

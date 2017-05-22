@@ -16,6 +16,11 @@ public class BookCopyDAO extends BaseDAO implements ResultSetExtractor<List<Book
 		return template.query("select * from tbl_book_copies where branchId = ?", new Object[] { branchId }, this);
 	}
 
+	public void updateBookCopy(BookCopy bc) throws DataAccessException {
+		template.update("update tbl_book_copies set noOfCopies = ? where bookId = ? and branchId = ?",
+				new Object[] { bc.getNoOfCopies(), bc.getBookId(), bc.getBranchId() });
+	}
+
 	@Override
 	public List<BookCopy> extractData(ResultSet rs) throws SQLException, DataAccessException {
 		List<BookCopy> bookCopies = new ArrayList<>();

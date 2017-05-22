@@ -16,14 +16,20 @@ public class BranchDAO extends BaseDAO implements ResultSetExtractor<List<Branch
 		return template.query("select * from tbl_library_branch", this);
 	}
 
-	public Branch readBranchByPK(Integer primaryKey) throws DataAccessException{
-		List<Branch> branches = template.query("select * from tbl_library_branch where branchId = ?", new Object[] { primaryKey }, this);
+	public Branch readBranchByPK(Integer primaryKey) throws DataAccessException {
+		List<Branch> branches = template.query("select * from tbl_library_branch where branchId = ?",
+				new Object[] { primaryKey }, this);
 		if (branches != null && !branches.isEmpty()) {
 			return branches.get(0);
 		}
-		return null; 
+		return null;
 	}
-	
+
+	public void updateBranch(Branch branch) {
+		template.update("update tbl_library_branch set branchName = ?, branchAddress = ?  where branchId = ?",
+				new Object[] { branch.getBranchName(), branch.getBranchAddress(), branch.getBranchId() });
+	}
+
 	/**
 	 * Note: only extract first level of data from tbl_library_branch.
 	 */
@@ -40,8 +46,4 @@ public class BranchDAO extends BaseDAO implements ResultSetExtractor<List<Branch
 		return branches;
 	}
 
-	
-	
-
 }
-
