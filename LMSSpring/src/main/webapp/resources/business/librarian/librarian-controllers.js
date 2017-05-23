@@ -134,7 +134,6 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 	
 	$scope.extendDate = function(bl) {
 		bl.dueDate = bl.realDueDate;
-		console.log(bl);
 		
 		$http.put("http://localhost:8080/lms/bookloans", bl).success(function(){
 			$scope.closeModal();

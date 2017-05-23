@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+import com.gcit.lms.entity.Author;
 import com.gcit.lms.entity.Book;
 import com.gcit.lms.entity.Genre;
 
@@ -24,17 +25,26 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 		PreparedStatementCreatorFactory factory = new PreparedStatementCreatorFactory(sql, new int[] { Types.VARCHAR });
 		PreparedStatementCreator psc = factory.newPreparedStatementCreator(params);
 		factory.setReturnGeneratedKeys(true);
-
 		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		// add to tbl_book
 		template.update(psc, keyHolder);
 
-		if (keyHolder.getKey() != null)
+		if (keyHolder.getKey() != null) {
+			// add to tbl_book_genres
 			for (Genre g : book.getGenres()) {
 				template.update("insert into tbl_book_genres (genre_id, bookId) values (?, ?)",
 						new Object[] { g.getGenreId(), keyHolder.getKey() });
 			}
-		else
+
+			// add to tbl_book_authors
+			for (Author a : book.getAuthors()) {
+				template.update("insert into tbl_book_authors (bookId, authorId) values (?, ?)",
+						new Object[] { keyHolder.getKey(), a.getAuthorId() });
+			}
+		} else
 			throw new SQLException("BookDAO(): no generated key returned.");
+
 	}
 
 	public Integer addBookWithID(Book book) throws ClassNotFoundException, SQLException {

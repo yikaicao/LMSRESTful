@@ -19,6 +19,9 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 		$http.get("http://localhost:8080/lms/genres").success(function(data) {
 			$scope.genres = data;
 		});
+		$http.get("http://localhost:8080/lms/authors").success(function(data){
+			$scope.authors = data;
+		});
 	}
 
 	$scope.sort = function() {
@@ -47,6 +50,7 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 	$scope.saveBook = function() {
 
 		$scope.item.genres = [];
+		$scope.item.authors = [];
 
 		var tmpGenreId;
 		// for each selected genre, prepare an object first
@@ -57,6 +61,18 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 			$scope.item.genres.push(tmpGenreId);
 		});
 
+		if ($scope.item.title == null || $scope.item.authorIDs == null || $scope.item.genres == null) {
+			alert("Please fill in all details of the book.");
+		}
+		
+		// init author entity
+		var tmpAuthorId;
+		$scope.item.authorIDs.forEach(function(e) {
+			tmpAuthorId = {authorId: e};
+			$scope.item.authors.push(tmpAuthorId);
+		});
+
+		console.log($scope.item);
 		$http.post("http://localhost:8080/lms/addBook", $scope.item).success(
 				function() {
 					$window.location.href = "#/viewbooks";

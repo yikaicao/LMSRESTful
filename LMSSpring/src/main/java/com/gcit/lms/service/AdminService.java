@@ -132,7 +132,6 @@ public class AdminService {
 	@Transactional
 	@RequestMapping(value = "/addBook", method = RequestMethod.POST, consumes = "application/json")
 	public void createBook(@RequestBody Book book) {
-		//System.out.printf("size = %d\n", book.getAuthors().size());
 		try {
 			bdao.addBook(book);
 		} catch (ClassNotFoundException | SQLException e) {

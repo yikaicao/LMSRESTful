@@ -2,20 +2,22 @@
 	<h2>Hello Admin!</h2>
 	<h3>Enter the details of your Book</h3>
 
-
-
-
-	<input type="text" ng-model="item.title"> <br />
-	<input type="text" ng-model="item.author"> <br />
-	
-	<div class="checbox">
-		<label ng-repeat="g in genres"> <input type="checkbox" ng-click="addGenre(g.genreId)">
-			{{g.genreName}}
+	<div>
+		<h4>Book Title</h4>
+		<input class="form-control" type="text" ng-model="item.title">
+		<br />
+		<h4>Book Genre(s)</h4>
+		<label ng-repeat="g in genres"> <input type="checkbox"
+			ng-click="addGenre(g.genreId)"> {{g.genreName}}
 		</label>
+
+		<h4>Book Author(s)</h4>
+		<select class="form-control" ng-model="item.authorIDs" multiple>
+			<option ng-repeat="a in authors" ng-value="a.authorId">{{a.authorName}}</option>
+		</select> <br />
 	</div>
-	<button type="button" ng-click="saveBook()">Add Book</button>
 
+	<button class="form-control" type="button" ng-click="saveBook()">Add
+		Book</button>
 
-
-	<label> 
 </div>
