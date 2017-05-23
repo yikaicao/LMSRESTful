@@ -73,10 +73,17 @@
 					</div>
 					<div class="modal-body">
 						<p>Book title:</p>
-						<input type="text" ng-model="book.title"> <br />
-						<p>Book genres:</p>
-						<label ng-repeat="g in genres" > <input type="checkbox"
-							ng-click="updateGenre(g.genreId)" ng-checked="thisBookGenres.indexOf(g.genreId) > -1"> {{g.genreName}}
+						<input type="text" ng-model="book.title"> <br /> <br />
+						<p>Author(s):</p>
+						<select class="form-control" multiple>
+							<option ng-repeat="a in authors" ng-value="a.authorId" ng-selected="existedAuthor(a, book)">{{a.authorName}}</option>
+						</select> <br />
+						<br /> <br />
+						<p>Book Genre(s):</p>
+						<label ng-repeat="g in genres"> <input type="checkbox"
+							ng-click="updateGenre(g.genreId)"
+							ng-checked="thisBookGenres.indexOf(g.genreId) > -1">
+							{{g.genreName}}
 						</label>
 					</div>
 					<div class="modal-footer">
@@ -90,7 +97,7 @@
 		</div>
 	</div>
 	<!-- End of Modal -->
-	
+
 	<!-- Modal for deleting an existed book -->
 	<div class="modal fade bs-example-modal-lg" id="deleteItemModal"
 		modal="deleteItemModal" tabindex="-1" role="dialog"

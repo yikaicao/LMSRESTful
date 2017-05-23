@@ -159,6 +159,7 @@ public class AdminService {
 		try {
 			Book toReturn = bdao.readBookByID(primaryKey);
 			toReturn.setGenres(gdao.readAllGenresByBookID(toReturn.getBookId()));
+			toReturn.setAuthors(adao.readAllAuthorsByBookID(toReturn.getBookId()));
 			return toReturn;
 		} catch (DataAccessException e) {
 			e.printStackTrace();

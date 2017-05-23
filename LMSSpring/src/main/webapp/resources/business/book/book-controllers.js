@@ -8,6 +8,9 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 					$scope.pagination.numPages = Math.ceil($scope.items.length
 							/ $scope.pagination.perPage);
 				});
+		$http.get("http://localhost:8080/lms/authors").success(function(data){
+			$scope.authors = data;
+		});
 	} else if ($location.$$path === "/addbook") {
 		$http.get("http://localhost:8080/lms/initBook").success(function(data) {
 			$scope.item = data;
@@ -133,8 +136,21 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 												/ $scope.pagination.perPage);
 							});
 				});
-	}
+	};
 
+	$scope.existedAuthor = function (author, book) {
+		if (author === undefined || book === undefined)
+			return false;
+		var authorIds = new Array;
+		book.authors.forEach(function(e, index) {
+			authorIds.push(book.authors[index].authorId);
+		});
+		
+		
+		if (authorIds.indexOf(author.authorId) >= 0)
+			return true;
+		return false;
+	};
 	// end of updating new book functions
 	
 	/**
