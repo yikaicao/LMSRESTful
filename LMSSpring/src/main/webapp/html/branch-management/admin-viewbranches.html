@@ -93,15 +93,13 @@
 						</button>
 						<h4 class="modal-title">Add New Book to Branch</h4>
 					</div>
-					<div class="modal-body">
 
+					<div class="modal-body">
 						<!-- Book Copies Table -->
 						<select class="form-control" ng-model="b.bookId">
 							<option ng-repeat="b in missedBooks" ng-value="b.bookId">{{b.title}}</option>
 						</select> <br /> <input class="form-control" ng-model="b.noOfCopies"
 							type="number" min="0">
-
-
 						<!-- End of Book Copies Table -->
 					</div>
 
@@ -141,17 +139,16 @@
 								<td><input class="form-control" type="text"
 									placeholder="{{bl.borrowerName}}" disabled></td>
 								<td><input class="form-control" type="date"
-									value="{{bl.dueDate}}" disabled></td>
+									ng-model="bl.realDueDate" required /></td>
+
 								<td><button type="button" class="btn btn-warning"
-										data-dismiss="modal" ng-click="extendDate(bl)">Extend</button></td>
+										data-dismiss="modal" ng-click="extendDate(bl)">Update</button></td>
 							</tr>
 						</table>
 						<!-- End of Book Loans Table -->
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success"
-							ng-click="addBookCopy(b)">Add</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal"
 							ng-click="closeModal()">Close</button>
 					</div>

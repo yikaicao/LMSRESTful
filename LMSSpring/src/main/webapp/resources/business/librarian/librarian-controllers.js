@@ -123,14 +123,22 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 				$http.get("http://localhost:8080/lms/borrowers/"+e.cardNo).success(function(backendBorrower){
 					backendBookLoanList[i].borrowerName = backendBorrower.name;
 				});
+				var d = new Date(backendBookLoanList[i].dueDate);
+				d.setDate(d.getDate() + 1);
+				backendBookLoanList[i].realDueDate = d;
 			});
 			$scope.bookLoans = backendBookLoanList;
 		});
 	}
 	
-	$scope.extendDate = function(data) {
-		$http.put("http://localhost:8080/lms/extendduedate/"+data.branchId+"/"+data.bookId+"/"+data.cardNo).success(function(){
-			$http.get("http://localhost:8080/lms/bookloans/"+data.branchId).success(function(backendBookLoanList){
+	
+	$scope.extendDate = function(bl) {
+		bl.dueDate = bl.realDueDate;
+		console.log(bl);
+		
+		$http.put("http://localhost:8080/lms/bookloans", bl).success(function(){
+			$scope.closeModal();
+			$http.get("http://localhost:8080/lms/bookloans/"+bl.branchId).success(function(backendBookLoanList){
 				backendBookLoanList.forEach(function(e, i){
 					$http.get("http://localhost:8080/lms/books/"+e.bookId).success(function(backendBook){
 						backendBookLoanList[i].title = backendBook.title;
@@ -138,10 +146,28 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 					$http.get("http://localhost:8080/lms/borrowers/"+e.cardNo).success(function(backendBorrower){
 						backendBookLoanList[i].borrowerName = backendBorrower.name;
 					});
+					var d = new Date(backendBookLoanList[i].dueDate);
+					d.setDate(d.getDate() + 1);
+					backendBookLoanList[i].realDueDate = d;
 				});
 				$scope.bookLoans = backendBookLoanList;
 			});
 		});
+		
+		
+//		$http.put("http://localhost:8080/lms/extendduedate/"+data.branchId+"/"+data.bookId+"/"+data.cardNo).success(function(){
+//			$http.get("http://localhost:8080/lms/bookloans/"+data.branchId).success(function(backendBookLoanList){
+//				backendBookLoanList.forEach(function(e, i){
+//					$http.get("http://localhost:8080/lms/books/"+e.bookId).success(function(backendBook){
+//						backendBookLoanList[i].title = backendBook.title;
+//					});
+//					$http.get("http://localhost:8080/lms/borrowers/"+e.cardNo).success(function(backendBorrower){
+//						backendBookLoanList[i].borrowerName = backendBorrower.name;
+//					});
+//				});
+//				$scope.bookLoans = backendBookLoanList;
+//			});
+//		});
 	}
 	// end of overriding
 	
