@@ -20,9 +20,9 @@ import com.gcit.lms.entity.Genre;
 public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 
 	public void addBook(Book book) throws ClassNotFoundException, SQLException {
-		String sql = "insert into tbl_book (`title`) values (?)";
-		Object[] params = new Object[] { book.getTitle() };
-		PreparedStatementCreatorFactory factory = new PreparedStatementCreatorFactory(sql, new int[] { Types.VARCHAR });
+		String sql = "insert into tbl_book (`title`, pubId) values (?, ?)";
+		Object[] params = new Object[] { book.getTitle(), book.getPublisher() };
+		PreparedStatementCreatorFactory factory = new PreparedStatementCreatorFactory(sql, new int[] { Types.VARCHAR , Types.VARCHAR});
 		PreparedStatementCreator psc = factory.newPreparedStatementCreator(params);
 		factory.setReturnGeneratedKeys(true);
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -115,8 +115,7 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 			template.update("delete from tbl_book_authors where bookId = ?", new Object[] { book.getBookId() });
 			for (Author a : book.getAuthors()) {
 				template.update("insert into tbl_book_authors (bookId, authorId) values (?, ?)",
-						new Object[] { book.getBookId(), a.getAuthorId()
-});
+						new Object[] { book.getBookId(), a.getAuthorId() });
 			}
 		}
 	}

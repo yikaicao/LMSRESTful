@@ -25,6 +25,9 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 		$http.get("http://localhost:8080/lms/authors").success(function(data){
 			$scope.authors = data;
 		});
+		$http.get("http://localhost:8080/lms/publishers").success(function(data){
+			$scope.publishers = data;
+		});
 	}
 
 	$scope.sort = function() {
@@ -74,7 +77,6 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 			tmpAuthorId = {authorId: e};
 			$scope.item.authors.push(tmpAuthorId);
 		});
-
 		console.log($scope.item);
 		$http.post("http://localhost:8080/lms/addBook", $scope.item).success(
 				function() {

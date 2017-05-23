@@ -10,7 +10,7 @@ public class Book implements Serializable {
 	private Integer bookId;
 	private String title;
 	private List<Author> authors;
-	private Publisher publisher;
+	private Integer publisher;
 	public List<Genre> genres;
 
 	/**
@@ -61,7 +61,7 @@ public class Book implements Serializable {
 	/**
 	 * @return the publisher
 	 */
-	public Publisher getPublisher() {
+	public Integer getPublisher() {
 		return publisher;
 	}
 
@@ -69,7 +69,7 @@ public class Book implements Serializable {
 	 * @param publisher
 	 *            the publisher to set
 	 */
-	public void setPublisher(Publisher publisher) {
+	public void setPublisher(Integer publisher) {
 		this.publisher = publisher;
 	}
 
