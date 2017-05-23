@@ -1,0 +1,117 @@
+<div ng-controller="adminController">
+	<div class="page-header">
+		<h1>List of Publishers in LMS</h1>
+	</div>
+
+	<!-- Pagination -->
+	<div class="col-md-10">
+		<ul class="pagination">
+			<li><a href="" ng-click="pagination.prevPage()">&laquo;</a></li>
+			<li ng-repeat="n in [] | range: pagination.numPages"
+				ng-class="{active: n == pagination.page}"><a href=""
+				ng-click="pagination.toPageId(n)">{{n + 1}}</a></li>
+			<li><a href="" ng-click="pagination.nextPage()">&raquo;</a></li>
+		</ul>
+	</div>
+	<!-- End of Pagination -->
+
+	<!-- Table for listing authors -->
+	<table class="table" id="itemsTable">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th><a ng-click="sort()">Publisher Name</a></th>
+				<th>Address</th>
+				<th>Phone</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
+				ng-repeat="p in publishers | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage">
+				<td>{{$index+1}}</td>
+				<td>{{p.publisherName}}</td>
+				<td>{{p.publisherAddress}}</td>
+				<td>{{p.publisherPhone}}</td>
+				<td><button type="button" class="btn btn-primary"
+						ng-click="showEditPublisherModal(p.publisherId)">Update</button></td>
+				<td><button type="button" class="btn btn-danger"
+						ng-click="showDeletePublisherModal(p.publisherId)">Delete</button></td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- End of Table -->
+
+
+	<!-- Modal for editing an existed author -->
+	<div class="modal fade bs-example-modal-lg" id="editPublisherModal"
+		modal="editPublisherModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Update Publisher Details</h4>
+					</div>
+					<div class="modal-body">
+						<p>Enter Publisher Name:</p>
+						<input type="text" ng-model="publisher.publisherName"> <br />
+						<p>Enter Publisher Address:</p>
+						<input type="text" ng-model="publisher.publisherAddress"> <br />
+						<p>Enter Publisher Phone:</p>
+						<input type="text" ng-model="publisher.publisherPhone"> <br />
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
+						<button type="button" class="btn btn-primary"
+							ng-click="updatePublisher()">Update</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- End of Modal -->
+	
+	<!-- Modal for deleting an existed author -->
+	<div class="modal fade bs-example-modal-lg" id="deletePublisherModal"
+		modal="deletePublisherModal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close" ng-click="closeModal()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Delete Publisher</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to delete Publisher: {{publisher.publisherName}}?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							ng-click="closeModal()">Close</button>
+						<button type="button" class="btn btn-danger"
+							ng-click="deletePublisher()">Confirm</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- End of Modal -->
+	
+
+</div>
+
+

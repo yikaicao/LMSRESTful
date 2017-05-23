@@ -195,6 +195,23 @@ public class AdminService {
 		return pdao.readAllPublishers();
 	}
 
+	@RequestMapping(value = "/publishers/{publisherId}", method = RequestMethod.GET, produces = "application/json")
+	public Publisher readPublisher(@PathVariable Integer publisherId) {
+		return pdao.readPublisherByPK(publisherId);
+	}
+
+	@Transactional
+	@RequestMapping(value = "/publishers", method = RequestMethod.PUT)
+	public void updatePublisher(@RequestBody Publisher publisher) {
+		pdao.updatePublisher(publisher);
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/publishers/{primaryKey}", method = RequestMethod.DELETE)
+	public void deletePublisher(@PathVariable Integer primaryKey) {
+		pdao.deltePublisherByPK(primaryKey);
+	}
+
 	// %%%%%%%%%% genre services %%%%%%%%%%
 	@RequestMapping(value = "/initGenre", method = RequestMethod.GET, produces = "application/json")
 	public Genre initGenre() {

@@ -29,6 +29,11 @@ lmsApp.config([ "$routeProvider", function($routeProvider) {
 		templateUrl : "html/borrower/viewbranches.html"
 	}).when("/branch", {
 		templateUrl : "html/branch-management/admin-viewbranches.html"
+	}).when("/publisher", {
+		templateUrl: "html/publisher-management/publisher.html"
+	}).when("/addpublisher",{
+		templateUrl: "html/publisher-management/addpublisher.html"
+	}).when("/viewpublishers",{
+		templateUrl: "html/publisher-management/viewpublishers.html"
 	})
-	
 } ])

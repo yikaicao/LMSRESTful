@@ -16,6 +16,25 @@ public class PublisherDAO extends BaseDAO implements ResultSetExtractor<List<Pub
 		return template.query("select * from tbl_publisher", this);
 	}
 
+	public Publisher readPublisherByPK(Integer publisherId) {
+		List<Publisher> pbs = template.query("select * from tbl_publisher where publisherId = ?",
+				new Object[] { publisherId }, this);
+		if (pbs != null && !pbs.isEmpty())
+			return pbs.get(0);
+		return null;
+	}
+
+	public void updatePublisher(Publisher publisher) {
+		template.update(
+				"update tbl_publisher set publisherName = ?, publisherAddress = ?, publisherPhone = ? where publisherId = ?",
+				new Object[] { publisher.getPublisherName(), publisher.getPublisherAddress(),
+						publisher.getPublisherPhone(), publisher.getPublisherId() });
+	}
+
+	public void deltePublisherByPK(Integer primaryKey) {
+		template.update("delete from tbl_publisher where publisherId = ?", new Object[] { primaryKey });
+	}
+
 	@Override
 	public List<Publisher> extractData(ResultSet rs) throws SQLException, DataAccessException {
 		List<Publisher> publishers = new ArrayList<>();
