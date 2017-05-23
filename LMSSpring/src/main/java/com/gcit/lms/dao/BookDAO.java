@@ -110,6 +110,15 @@ public class BookDAO extends BaseDAO implements ResultSetExtractor<List<Book>> {
 						new Object[] { g.getGenreId(), book.getBookId() });
 			}
 		}
+
+		if (book.getGenres() != null && !book.getGenres().isEmpty()) {
+			template.update("delete from tbl_book_authors where bookId = ?", new Object[] { book.getBookId() });
+			for (Author a : book.getAuthors()) {
+				template.update("insert into tbl_book_authors (bookId, authorId) values (?, ?)",
+						new Object[] { book.getBookId(), a.getAuthorId()
+});
+			}
+		}
 	}
 
 	public void deleteBook(Book book) throws ClassNotFoundException, SQLException {

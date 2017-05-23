@@ -87,13 +87,20 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 	 * helper functions for updating a new book
 	 */
 	$scope.showEditItemModal = function(itemId) {
+		
 		bookService.getBookByPKService(itemId).then(function(data) {
 			$scope.thisBookGenres = [];
 			$scope.book = data;
-			$scope.editItemModal = true;
 			$scope.book.genres.forEach(function(e) {
 				$scope.thisBookGenres.push(e.genreId);
 			});
+			
+			$scope.thisBookAuthors = [];
+			$scope.book.authors.forEach(function(e){
+				$scope.thisBookAuthors.push(e.authorId);
+			});
+
+			$scope.editItemModal = true;
 		});
 		$http.get("http://localhost:8080/lms/genres").success(function(data) {
 			$scope.genres = data;
@@ -113,8 +120,23 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 			$scope.thisBookGenres.push(data);
 		}
 	};
+	
+	$scope.updateAuthor = function(data) {
+		var index = $scope.thisBookAuthors.indexOf(data);
+
+		// if currently selected
+		if (index > -1) {
+			$scope.thisBookAuthors.splice(index, 1);
+		}
+
+		// if newly selected
+		else {
+			$scope.thisBookAuthors.push(data);
+		}
+	}
 
 	$scope.updateItem = function() {
+		
 		// clear out previous selection
 		$scope.book.genres = [];
 		$scope.thisBookGenres.forEach(function(e) {
@@ -123,6 +145,15 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 			};
 			$scope.book.genres.push(tmpGenreId);
 		});
+		
+		// prepare partial author entities
+		if ($scope.multipleSelect !== undefined) {
+			$scope.book.authors = [];
+			$scope.multipleSelect.forEach(function(e){
+				tmpAuthorId = {authorId : e};
+				$scope.book.authors.push(tmpAuthorId);
+			});
+		}
 
 		$http.put("http://localhost:8080/lms/books", $scope.book).success(
 				function() {
@@ -142,8 +173,8 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 		if (author === undefined || book === undefined)
 			return false;
 		var authorIds = new Array;
-		book.authors.forEach(function(e, index) {
-			authorIds.push(book.authors[index].authorId);
+		book.authors.forEach(function(e) {
+			authorIds.push(e.authorId);
 		});
 		
 		
@@ -164,6 +195,7 @@ lmsApp.controller("bookController", function($scope, $http, $window, $location,
 			$scope.book.genres.forEach(function(e) {
 				$scope.thisBookGenres.push(e.genreId);
 			});
+			
 		});
 		$http.get("http://localhost:8080/lms/genres").success(function(data) {
 			$scope.genres = data;

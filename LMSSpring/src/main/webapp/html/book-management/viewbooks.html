@@ -75,9 +75,14 @@
 						<p>Book title:</p>
 						<input type="text" ng-model="book.title"> <br /> <br />
 						<p>Author(s):</p>
-						<select class="form-control" multiple>
-							<option ng-repeat="a in authors" ng-value="a.authorId" ng-selected="existedAuthor(a, book)">{{a.authorName}}</option>
-						</select> <br />
+						
+						<select class="form-control" name="multipleSelect" id="multipleSelect"
+							ng-model="multipleSelect" multiple>
+							<option ng-repeat="a in authors" value="{{a.authorId}}" ng-selected="thisBookAuthors.indexOf(a.authorId) > -1">{{a.authorName}}</option>
+						</select><br>
+						<tt>Updated Author(s) = {{data.multipleSelect}}</tt>
+						<br /> 
+						
 						<br /> <br />
 						<p>Book Genre(s):</p>
 						<label ng-repeat="g in genres"> <input type="checkbox"
