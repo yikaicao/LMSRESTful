@@ -117,12 +117,15 @@ lmsApp.controller("librarianController", function($scope, $http, $window, $locat
 		$scope.branchId = branchId;
 		$http.get("http://localhost:8080/lms/bookloans/"+branchId).success(function(backendBookLoanList){
 			backendBookLoanList.forEach(function(e, i){
+				
 				$http.get("http://localhost:8080/lms/books/"+e.bookId).success(function(backendBook){
 					backendBookLoanList[i].title = backendBook.title;
 				});
 				$http.get("http://localhost:8080/lms/borrowers/"+e.cardNo).success(function(backendBorrower){
 					backendBookLoanList[i].borrowerName = backendBorrower.name;
 				});
+				
+				// set due date for angular
 				var d = new Date(backendBookLoanList[i].dueDate);
 				d.setDate(d.getDate() + 1);
 				backendBookLoanList[i].realDueDate = d;
