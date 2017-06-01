@@ -24,9 +24,9 @@ import com.gcit.lms.service.LibrarianService;
 public class LMSConfig {
 	
 	public String driver = "com.mysql.jdbc.Driver";
-	public String url = "jdbc:mysql://localhost/library?autoReconnect=true&useSSL=false";
-	public String username = "root";
-	public String password = "jkl;'";
+	public String url = "jdbc:mysql://akbar.cq2hsenwnqri.us-east-1.rds.amazonaws.com:3306/library";
+	public String username = "yikaicao";
+	public String password = "xiaoyuzuishou";
 	
 	@Bean
 	public BasicDataSource dataSource(){
